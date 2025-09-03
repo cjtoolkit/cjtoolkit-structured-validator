@@ -84,7 +84,7 @@ impl LocaleMessage for UsernameTakenLocale {
 }
 
 impl Username {
-    pub fn parse_custom(s: &str, rules: &UsernameRules) -> Result<Self, UsernameError> {
+    pub fn parse_custom(s: &str, rules: UsernameRules) -> Result<Self, UsernameError> {
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
         rules.check(&mut msgs, &subject);
@@ -93,7 +93,7 @@ impl Username {
     }
 
     pub fn parse(s: &str) -> Result<Self, UsernameError> {
-        Self::parse_custom(s, &UsernameRules::default())
+        Self::parse_custom(s, UsernameRules::default())
     }
 
     pub fn check_username_taken<T: IsUsernameTaken>(

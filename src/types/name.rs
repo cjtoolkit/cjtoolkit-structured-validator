@@ -63,7 +63,7 @@ impl ValidationCheck for NameError {
 pub struct Name(String);
 
 impl Name {
-    pub fn parse_custom(s: &str, rules: &NameRules) -> Result<Self, NameError> {
+    pub fn parse_custom(s: &str, rules: NameRules) -> Result<Self, NameError> {
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
         rules.check(&mut msgs, &subject);
@@ -72,7 +72,7 @@ impl Name {
     }
 
     pub fn parse(s: &str) -> Result<Self, NameError> {
-        Self::parse_custom(s, &NameRules::default())
+        Self::parse_custom(s, NameRules::default())
     }
 
     pub fn as_str(&self) -> &str {

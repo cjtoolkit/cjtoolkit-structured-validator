@@ -63,7 +63,7 @@ impl ValidationCheck for DescriptionError {
 pub struct Description(String);
 
 impl Description {
-    pub fn parse_custom(s: &str, rules: &DescriptionRules) -> Result<Self, DescriptionError> {
+    pub fn parse_custom(s: &str, rules: DescriptionRules) -> Result<Self, DescriptionError> {
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
         rules.check(&mut msgs, &subject);
@@ -72,7 +72,7 @@ impl Description {
     }
 
     pub fn parse(s: &str) -> Result<Self, DescriptionError> {
-        Self::parse_custom(s, &DescriptionRules::default())
+        Self::parse_custom(s, DescriptionRules::default())
     }
 
     pub fn as_str(&self) -> &str {

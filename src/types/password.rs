@@ -109,7 +109,7 @@ impl LocaleMessage for PasswordDoesNotMatchLocale {
 }
 
 impl Password {
-    pub fn parse_custom(s: &str, rules: &PasswordRules) -> Result<Self, PasswordError> {
+    pub fn parse_custom(s: &str, rules: PasswordRules) -> Result<Self, PasswordError> {
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
         rules.check(&mut msgs, &subject);
@@ -118,7 +118,7 @@ impl Password {
     }
 
     pub fn parse(s: &str) -> Result<Self, PasswordError> {
-        Self::parse_custom(s, &PasswordRules::default())
+        Self::parse_custom(s, PasswordRules::default())
     }
 
     pub fn parse_confirm(&self, password_confirm: &str) -> Result<Self, PasswordError> {
