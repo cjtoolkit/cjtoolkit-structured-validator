@@ -94,8 +94,8 @@ impl ValidationCheck for PasswordError {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Default)]
-pub struct Password(pub String);
+#[derive(PartialEq, Clone, Default)]
+pub struct Password(String);
 
 pub struct PasswordDoesNotMatchLocale;
 

@@ -60,7 +60,7 @@ impl ValidationCheck for NameError {
 }
 
 #[derive(Debug, PartialEq, Clone, Default)]
-pub struct Name(pub String);
+pub struct Name(String);
 
 impl Name {
     pub fn parse_custom(s: &str, rules: &NameRules) -> Result<Self, NameError> {

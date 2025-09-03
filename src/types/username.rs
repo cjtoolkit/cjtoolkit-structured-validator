@@ -62,7 +62,7 @@ impl ValidationCheck for UsernameError {
 }
 
 #[derive(Debug, PartialEq, Clone, Default)]
-pub struct Username(pub String);
+pub struct Username(String);
 
 pub trait IsUsernameTaken {
     fn is_username_taken(&self, username: &str) -> bool;

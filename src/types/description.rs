@@ -60,7 +60,7 @@ impl ValidationCheck for DescriptionError {
 }
 
 #[derive(Debug, PartialEq, Clone, Default)]
-pub struct Description(pub String);
+pub struct Description(String);
 
 impl Description {
     pub fn parse_custom(s: &str, rules: &DescriptionRules) -> Result<Self, DescriptionError> {
