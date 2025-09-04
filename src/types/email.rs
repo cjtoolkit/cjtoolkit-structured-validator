@@ -70,7 +70,7 @@ impl LocaleMessage for EmailAddressLocale {
     fn get_locale_data(&self) -> crate::common::locale::LocaleData {
         match self {
             Self::InvalidEmail => crate::common::locale::LocaleData {
-                name: "validate-invalid-email".to_string(),
+                name: "validate-email-invalid".to_string(),
                 args: Default::default(),
             },
             Self::DoesNotMatch => crate::common::locale::LocaleData {
