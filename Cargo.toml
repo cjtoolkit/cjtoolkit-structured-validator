@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [features]
+full = ["url", "email"]
 url = ["dep:url"]
 email = ["dep:email-address-parser"]
 
