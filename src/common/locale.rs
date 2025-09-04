@@ -57,6 +57,10 @@ impl ValidateErrorStore {
     }
 
     pub fn as_original_message(&self) -> Arc<[String]> {
+        self.as_original_message_vec().into()
+    }
+
+    pub fn as_original_message_vec(&self) -> Vec<String> {
         self.0.iter().map(|e| e.0.clone()).collect()
     }
 }
