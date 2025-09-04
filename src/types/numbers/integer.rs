@@ -59,8 +59,14 @@ impl ValidationCheck for IntegerError {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Integer(isize, bool);
+
+impl Default for Integer {
+    fn default() -> Self {
+        Self(0, true)
+    }
+}
 
 impl Integer {
     pub fn parse_custom(s: Option<isize>, rules: IntegerRules) -> Result<Self, IntegerError> {

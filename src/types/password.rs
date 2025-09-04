@@ -102,8 +102,14 @@ impl ValidationCheck for PasswordError {
     }
 }
 
-#[derive(PartialEq, Clone, Default)]
+#[derive(PartialEq, Clone)]
 pub struct Password(String, bool);
+
+impl Default for Password {
+    fn default() -> Self {
+        Self(String::new(), true)
+    }
+}
 
 pub struct PasswordDoesNotMatchLocale;
 
@@ -142,7 +148,7 @@ impl Password {
         });
 
         PasswordError::validate_check(msgs)?;
-        Ok(self.clone())
+        Ok(Self(self.as_str().to_string(), self.1))
     }
 
     pub fn as_str(&self) -> &str {

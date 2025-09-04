@@ -67,8 +67,14 @@ impl ValidationCheck for DescriptionError {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Description(String, bool);
+
+impl Default for Description {
+    fn default() -> Self {
+        Self(String::new(), true)
+    }
+}
 
 impl Description {
     pub fn parse_custom(

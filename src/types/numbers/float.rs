@@ -59,8 +59,14 @@ impl ValidationCheck for FloatError {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Float(f64, bool);
+
+impl Default for Float {
+    fn default() -> Self {
+        Self(0.0, true)
+    }
+}
 
 impl Float {
     pub fn parse_custom(s: Option<f64>, rules: FloatRules) -> Result<Self, FloatError> {

@@ -59,8 +59,14 @@ impl ValidationCheck for UnsignedError {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Unsigned(usize, bool);
+
+impl Default for Unsigned {
+    fn default() -> Self {
+        Self(0, true)
+    }
+}
 
 impl Unsigned {
     pub fn parse_custom(s: Option<usize>, rules: UnsignedRules) -> Result<Self, UnsignedError> {

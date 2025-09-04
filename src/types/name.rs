@@ -67,8 +67,14 @@ impl ValidationCheck for NameError {
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Name(String, bool);
+
+impl Default for Name {
+    fn default() -> Self {
+        Self(String::new(), true)
+    }
+}
 
 impl Name {
     pub fn parse_custom(s: Option<&str>, rules: NameRules) -> Result<Self, NameError> {
