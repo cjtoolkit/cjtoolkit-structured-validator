@@ -1,4 +1,6 @@
 pub mod description;
+#[cfg(feature = "email")]
+pub mod email;
 pub mod name;
 pub mod numbers;
 pub mod password;
