@@ -1,6 +1,28 @@
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
 use std::fmt::Display;
 
+pub trait ToF64 {
+    fn to_f64(&self) -> f64;
+}
+
+impl ToF64 for f64 {
+    fn to_f64(&self) -> f64 {
+        *self
+    }
+}
+
+impl ToF64 for usize {
+    fn to_f64(&self) -> f64 {
+        *self as f64
+    }
+}
+
+impl ToF64 for isize {
+    fn to_f64(&self) -> f64 {
+        *self as f64
+    }
+}
+
 pub struct NumberMandatoryLocale;
 
 impl LocaleMessage for NumberMandatoryLocale {
@@ -48,28 +70,6 @@ impl LocaleMessage for NumberRangeLocale {
                     .collect(),
             },
         }
-    }
-}
-
-pub trait ToF64 {
-    fn to_f64(&self) -> f64;
-}
-
-impl ToF64 for f64 {
-    fn to_f64(&self) -> f64 {
-        *self
-    }
-}
-
-impl ToF64 for usize {
-    fn to_f64(&self) -> f64 {
-        *self as f64
-    }
-}
-
-impl ToF64 for isize {
-    fn to_f64(&self) -> f64 {
-        *self as f64
     }
 }
 
