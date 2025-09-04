@@ -108,3 +108,20 @@ impl Url {
         if self.1 { None } else { Some(self) }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_valid_url() {
+        let url = Url::parse(Some("https://www.example.com"));
+        assert!(url.is_ok());
+    }
+
+    #[test]
+    fn test_invalid_url() {
+        let url = Url::parse(Some("www.example.com"));
+        assert!(url.is_err());
+    }
+}

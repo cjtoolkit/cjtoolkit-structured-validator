@@ -133,3 +133,34 @@ impl Email {
         if self.1 { None } else { Some(self) }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_valid_email() {
+        let email = Email::parse(Some("test@example.com"));
+        assert!(email.is_ok());
+    }
+
+    #[test]
+    fn test_invalid_email() {
+        let email = Email::parse(Some("test"));
+        assert!(email.is_err());
+    }
+
+    #[test]
+    fn test_email_confirm_valid() {
+        let email = Email::parse(Some("test@example.com")).unwrap_or_default();
+        let email_confirm = email.parse_confirm("test@example.com");
+        assert!(email_confirm.is_ok());
+    }
+
+    #[test]
+    fn test_email_confirm_invalid() {
+        let email = Email::parse(Some("test@example.com")).unwrap_or_default();
+        let email_confirm = email.parse_confirm("test");
+        assert!(email_confirm.is_err());
+    }
+}
