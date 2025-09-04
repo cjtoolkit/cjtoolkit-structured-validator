@@ -39,7 +39,10 @@ impl DescriptionRules {
         self.into()
     }
 
-    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator) {
+    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator, is_none: bool) {
+        if !self.is_mandatory && is_none {
+            return;
+        }
         let (mandatory_rule, length_rule) = self.rules();
         mandatory_rule.check(msgs, subject);
         if !msgs.is_empty() {
@@ -60,22 +63,32 @@ impl ValidationCheck for DescriptionError {
 }
 
 #[derive(Debug, PartialEq, Clone, Default)]
-pub struct Description(String);
+pub struct Description(String, bool);
 
 impl Description {
-    pub fn parse_custom(s: &str, rules: DescriptionRules) -> Result<Self, DescriptionError> {
+    pub fn parse_custom(s: Option<&str>, rules: DescriptionRules) -> Result<Self, DescriptionError> {
+        let is_none = s.is_none();
+        let s = s.unwrap_or_default();
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
-        rules.check(&mut msgs, &subject);
+        rules.check(&mut msgs, &subject, is_none);
         DescriptionError::validate_check(msgs)?;
-        Ok(Self(s.to_string()))
+        Ok(Self(s.to_string(), is_none))
     }
 
-    pub fn parse(s: &str) -> Result<Self, DescriptionError> {
+    pub fn parse(s: Option<&str>) -> Result<Self, DescriptionError> {
         Self::parse_custom(s, DescriptionRules::default())
     }
 
     pub fn as_str(&self) -> &str {
         &self.0
+    }
+
+    pub fn into_option(self) -> Option<Description> {
+        if self.1 {
+            None
+        } else {
+            Some(self)
+        }
     }
 }

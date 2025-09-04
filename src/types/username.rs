@@ -41,7 +41,10 @@ impl UsernameRules {
         self.into()
     }
 
-    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator) {
+    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator, is_none: bool) {
+        if !self.is_mandatory && is_none {
+            return;
+        }
         let (mandatory_rule, length_rule) = self.rules();
         mandatory_rule.check(msgs, subject);
         if !msgs.is_empty() {
@@ -62,7 +65,7 @@ impl ValidationCheck for UsernameError {
 }
 
 #[derive(Debug, PartialEq, Clone, Default)]
-pub struct Username(String);
+pub struct Username(String, bool);
 
 pub trait IsUsernameTaken {
     fn is_username_taken(&self, username: &str) -> bool;
@@ -84,15 +87,17 @@ impl LocaleMessage for UsernameTakenLocale {
 }
 
 impl Username {
-    pub fn parse_custom(s: &str, rules: UsernameRules) -> Result<Self, UsernameError> {
+    pub fn parse_custom(s: Option<&str>, rules: UsernameRules) -> Result<Self, UsernameError> {
+        let is_none = s.is_none();
+        let s = s.unwrap_or_default();
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
-        rules.check(&mut msgs, &subject);
+        rules.check(&mut msgs, &subject, is_none);
         UsernameError::validate_check(msgs)?;
-        Ok(Self(s.to_string()))
+        Ok(Self(s.to_string(), is_none))
     }
 
-    pub fn parse(s: &str) -> Result<Self, UsernameError> {
+    pub fn parse(s: Option<&str>) -> Result<Self, UsernameError> {
         Self::parse_custom(s, UsernameRules::default())
     }
 
@@ -130,6 +135,14 @@ impl Username {
     pub fn as_str(&self) -> &str {
         &self.0
     }
+
+    pub fn into_option(self) -> Option<Username> {
+        if self.1 {
+            None
+        } else {
+            Some(self)
+        }
+    }
 }
 
 #[cfg(test)]
@@ -146,7 +159,7 @@ mod tests {
 
     #[test]
     fn username_is_taken() {
-        let username_result = Username("taken".to_string());
+        let username_result = Username("taken".to_string(), false);
 
         assert!(
             username_result
@@ -157,7 +170,7 @@ mod tests {
 
     #[test]
     fn username_is_not_taken() {
-        let username_result = Username("not_taken".to_string());
+        let username_result = Username("not_taken".to_string(), false);
 
         assert!(
             username_result

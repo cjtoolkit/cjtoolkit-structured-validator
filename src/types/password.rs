@@ -73,7 +73,10 @@ impl PasswordRules {
         self.into()
     }
 
-    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator) {
+    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator, is_none: bool) {
+        if !self.is_mandatory && is_none {
+            return;
+        }
         let (mandatory_rule, length_rule, special_char_rule) = self.rules();
         mandatory_rule.check(msgs, subject);
         if !msgs.is_empty() {
@@ -95,7 +98,7 @@ impl ValidationCheck for PasswordError {
 }
 
 #[derive(PartialEq, Clone, Default)]
-pub struct Password(String);
+pub struct Password(String, bool);
 
 pub struct PasswordDoesNotMatchLocale;
 
@@ -109,15 +112,17 @@ impl LocaleMessage for PasswordDoesNotMatchLocale {
 }
 
 impl Password {
-    pub fn parse_custom(s: &str, rules: PasswordRules) -> Result<Self, PasswordError> {
+    pub fn parse_custom(s: Option<&str>, rules: PasswordRules) -> Result<Self, PasswordError> {
+        let is_none = s.is_none();
+        let s = s.unwrap_or_default();
         let subject = s.as_string_validator();
         let mut msgs = ValidateErrorCollector::new();
-        rules.check(&mut msgs, &subject);
+        rules.check(&mut msgs, &subject, is_none);
         PasswordError::validate_check(msgs)?;
-        Ok(Self(s.to_string()))
+        Ok(Self(s.to_string(), is_none))
     }
 
-    pub fn parse(s: &str) -> Result<Self, PasswordError> {
+    pub fn parse(s: Option<&str>) -> Result<Self, PasswordError> {
         Self::parse_custom(s, PasswordRules::default())
     }
 
@@ -138,6 +143,14 @@ impl Password {
     pub fn as_str(&self) -> &str {
         &self.0
     }
+
+    pub fn into_option(self) -> Option<Password> {
+        if self.1 {
+            None
+        } else {
+            Some(self)
+        }
+    }
 }
 
 #[cfg(test)]
@@ -146,14 +159,14 @@ mod tests {
 
     #[test]
     fn test_password_parse_error_password_confirmation_mismatch() {
-        let password = Password("match".to_string());
+        let password = Password("match".to_string(), false);
         let password = password.parse_confirm("mismatch");
         assert!(password.is_err());
     }
 
     #[test]
     fn test_password_parse_error_password_confirmation_match() {
-        let password = Password("match".to_string());
+        let password = Password("match".to_string(), false);
         let password = password.parse_confirm("match");
         assert!(password.is_ok());
     }
