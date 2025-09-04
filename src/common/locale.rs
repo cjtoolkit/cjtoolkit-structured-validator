@@ -1,3 +1,4 @@
+use blake3::Hash;
 use std::collections::HashMap;
 use std::fmt::Debug;
 use std::sync::Arc;
@@ -36,7 +37,7 @@ impl Debug for ValidateErrorStore {
 
 impl PartialEq for ValidateErrorStore {
     fn eq(&self, other: &Self) -> bool {
-        format!("{:?}", self) == format!("{:?}", other)
+        self.hash() == other.hash()
     }
 }
 
@@ -47,6 +48,14 @@ impl Clone for ValidateErrorStore {
 }
 
 impl ValidateErrorStore {
+    fn hash(&self) -> Hash {
+        let mut hasher = blake3::Hasher::new();
+        for error in self.0.iter() {
+            hasher.update(error.0.as_bytes());
+        }
+        hasher.finalize()
+    }
+
     pub fn as_original_message(&self) -> Arc<[String]> {
         self.0.iter().map(|e| e.0.clone()).collect()
     }
