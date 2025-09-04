@@ -66,7 +66,7 @@ pub struct UrlValueLocale;
 impl LocaleMessage for UrlValueLocale {
     fn get_locale_data(&self) -> crate::common::locale::LocaleData {
         crate::common::locale::LocaleData {
-            name: "validate-url-value".to_string(),
+            name: "validate-invalid-url".to_string(),
             args: Default::default(),
         }
     }
