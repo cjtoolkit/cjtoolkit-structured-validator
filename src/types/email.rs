@@ -53,11 +53,11 @@ impl ValidationCheck for EmailError {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct Email(Option<EmailAddress>, bool);
+pub struct Email(String, Option<EmailAddress>, bool);
 
 impl Default for Email {
     fn default() -> Self {
-        Self(None, true)
+        Self(String::default(), None, true)
     }
 }
 
@@ -102,7 +102,7 @@ impl Email {
             }
         };
 
-        Ok(Self(Some(email), is_none))
+        Ok(Self(s.to_string(), Some(email), is_none))
     }
 
     pub fn parse(s: Option<&str>) -> Result<Self, EmailError> {
@@ -111,7 +111,7 @@ impl Email {
 
     pub fn parse_confirm(&self, confirm_email: &str) -> Result<Self, EmailError> {
         let mut messages = ValidateErrorCollector::new();
-        if self.0.as_ref().map(|e| e.to_string()) != Some(confirm_email.to_string()) {
+        if self.0 != confirm_email.to_string() {
             messages.push((
                 "Email does not match".to_string(),
                 Box::new(EmailAddressLocale::DoesNotMatch),
@@ -122,15 +122,15 @@ impl Email {
     }
 
     pub fn as_email(&self) -> Option<&EmailAddress> {
-        self.0.as_ref()
+        self.1.as_ref()
     }
 
-    pub fn to_string(&self) -> String {
-        self.0.as_ref().map(|e| e.to_string()).unwrap_or_default()
+    pub fn as_str(&self) -> &str {
+        &self.0   
     }
 
     pub fn into_option(self) -> Option<Email> {
-        if self.1 { None } else { Some(self) }
+        if self.2 { None } else { Some(self) }
     }
 }
 

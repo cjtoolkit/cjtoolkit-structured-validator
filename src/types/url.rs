@@ -53,11 +53,11 @@ impl ValidationCheck for UrlError {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct Url(Option<UrlValue>, bool);
+pub struct Url(String, Option<UrlValue>, bool);
 
 impl Default for Url {
     fn default() -> Self {
-        Self(None, true)
+        Self(String::default(), None, true)
     }
 }
 
@@ -89,7 +89,7 @@ impl Url {
             }
         };
 
-        Ok(Self(Some(url), is_none))
+        Ok(Self(s.to_string(), Some(url), is_none))
     }
 
     pub fn parse(s: Option<&str>) -> Result<Self, UrlError> {
@@ -97,15 +97,15 @@ impl Url {
     }
 
     pub fn as_url(&self) -> Option<&UrlValue> {
-        self.0.as_ref()
+        self.1.as_ref()
     }
 
     pub fn as_str(&self) -> &str {
-        self.0.as_ref().map(|url| url.as_str()).unwrap_or_default()
+        self.0.as_str()
     }
 
     pub fn into_option(self) -> Option<Url> {
-        if self.1 { None } else { Some(self) }
+        if self.2 { None } else { Some(self) }
     }
 }
 
