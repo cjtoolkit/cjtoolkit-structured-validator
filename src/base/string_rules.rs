@@ -274,7 +274,7 @@ mod tests {
         #[test]
         fn test_string_special_char_rule_check_not_empty_string_with_uppercase_and_lowercase_and_symbol()
          {
-            let mut messsages = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "Hello@".as_string_validator();
             let rule = StringSpecialCharRules {
                 must_have_uppercase: true,
@@ -282,9 +282,9 @@ mod tests {
                 must_have_special_chars: true,
                 must_have_digit: true,
             };
-            rule.check(&mut messsages, &subject);
-            assert_eq!(messsages.len(), 1);
-            assert_eq!(messsages.0[0].0, "Must contain at least one digit");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Must contain at least one digit");
         }
 
         #[test]

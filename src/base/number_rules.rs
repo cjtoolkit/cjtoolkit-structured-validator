@@ -36,13 +36,13 @@ pub enum NumberRangeLocale {
 impl LocaleMessage for NumberRangeLocale {
     fn get_locale_data(&self) -> LocaleData {
         match self {
-            NumberRangeLocale::MinValue(min) => LocaleData {
+            Self::MinValue(min) => LocaleData {
                 name: "validate-number-min-value".to_string(),
                 args: vec![("min".to_string(), LocaleValue::Float(*min))]
                     .into_iter()
                     .collect(),
             },
-            NumberRangeLocale::MaxValue(max) => LocaleData {
+            Self::MaxValue(max) => LocaleData {
                 name: "validate-number-max-value".to_string(),
                 args: vec![("max".to_string(), LocaleValue::Float(*max))]
                     .into_iter()
