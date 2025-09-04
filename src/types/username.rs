@@ -16,8 +16,8 @@ impl Default for UsernameRules {
     fn default() -> Self {
         Self {
             is_mandatory: true,
-            min_length: None,
-            max_length: Some(40),
+            min_length: Some(5),
+            max_length: Some(30),
         }
     }
 }
