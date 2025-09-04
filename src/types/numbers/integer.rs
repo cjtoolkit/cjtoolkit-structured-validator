@@ -83,3 +83,24 @@ impl Integer {
         if self.1 { None } else { Some(self) }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_integer() {
+        let integer = Integer::parse(Some(10));
+        assert!(integer.is_ok());
+        let integer = Integer::parse(Some(1000));
+        assert!(integer.is_err());
+        let integer = Integer::parse(Some(-50));
+        assert!(integer.is_err());
+    }
+
+    #[test]
+    fn test_none_integer() {
+        let integer = Integer::parse(None);
+        assert!(integer.is_err());
+    }
+}

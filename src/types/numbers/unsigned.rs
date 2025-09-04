@@ -83,3 +83,22 @@ impl Unsigned {
         if self.1 { None } else { Some(self) }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_unsigned() {
+        let unsigned = Unsigned::parse(Some(10));
+        assert!(unsigned.is_ok());
+        let unsigned = Unsigned::parse(Some(1000));
+        assert!(unsigned.is_err());
+    }
+
+    #[test]
+    fn test_none_unsigned() {
+        let unsigned = Unsigned::parse(None);
+        assert!(unsigned.is_err());
+    }
+}

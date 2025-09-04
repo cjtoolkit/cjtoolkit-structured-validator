@@ -83,3 +83,24 @@ impl Float {
         if self.1 { None } else { Some(self) }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_float() {
+        let float = Float::parse(Some(10.0));
+        assert!(float.is_ok());
+        let float = Float::parse(Some(1000.0));
+        assert!(float.is_err());
+        let float = Float::parse(Some(-0.1));
+        assert!(float.is_err());
+    }
+
+    #[test]
+    fn test_none_float() {
+        let float = Float::parse(None);
+        assert!(float.is_err());
+    }
+}
