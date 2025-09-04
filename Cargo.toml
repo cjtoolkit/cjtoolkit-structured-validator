@@ -3,6 +3,10 @@ name = "cjtoolkit-structured-validator"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+number = ["dep:num"]
+
 [dependencies]
 unicode-segmentation = "1.12.0"
 thiserror = "2.0.16"
+num = { version = "0.4.3", optional = true }

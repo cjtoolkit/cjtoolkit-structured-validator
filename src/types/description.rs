@@ -39,16 +39,21 @@ impl DescriptionRules {
         self.into()
     }
 
-    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator, is_none: bool) {
+    fn check(
+        &self,
+        messages: &mut ValidateErrorCollector,
+        subject: &StringValidator,
+        is_none: bool,
+    ) {
         if !self.is_mandatory && is_none {
             return;
         }
         let (mandatory_rule, length_rule) = self.rules();
-        mandatory_rule.check(msgs, subject);
-        if !msgs.is_empty() {
+        mandatory_rule.check(messages, subject);
+        if !messages.is_empty() {
             return;
         }
-        length_rule.check(msgs, subject);
+        length_rule.check(messages, subject);
     }
 }
 
@@ -57,8 +62,8 @@ impl DescriptionRules {
 pub struct DescriptionError(pub ValidateErrorStore);
 
 impl ValidationCheck for DescriptionError {
-    fn validate_new(msgs: ValidateErrorStore) -> Self {
-        Self(msgs)
+    fn validate_new(messages: ValidateErrorStore) -> Self {
+        Self(messages)
     }
 }
 
@@ -66,13 +71,16 @@ impl ValidationCheck for DescriptionError {
 pub struct Description(String, bool);
 
 impl Description {
-    pub fn parse_custom(s: Option<&str>, rules: DescriptionRules) -> Result<Self, DescriptionError> {
+    pub fn parse_custom(
+        s: Option<&str>,
+        rules: DescriptionRules,
+    ) -> Result<Self, DescriptionError> {
         let is_none = s.is_none();
         let s = s.unwrap_or_default();
         let subject = s.as_string_validator();
-        let mut msgs = ValidateErrorCollector::new();
-        rules.check(&mut msgs, &subject, is_none);
-        DescriptionError::validate_check(msgs)?;
+        let mut messages = ValidateErrorCollector::new();
+        rules.check(&mut messages, &subject, is_none);
+        DescriptionError::validate_check(messages)?;
         Ok(Self(s.to_string(), is_none))
     }
 
@@ -85,10 +93,6 @@ impl Description {
     }
 
     pub fn into_option(self) -> Option<Description> {
-        if self.1 {
-            None
-        } else {
-            Some(self)
-        }
+        if self.1 { None } else { Some(self) }
     }
 }

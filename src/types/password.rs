@@ -73,17 +73,22 @@ impl PasswordRules {
         self.into()
     }
 
-    fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator, is_none: bool) {
+    fn check(
+        &self,
+        messages: &mut ValidateErrorCollector,
+        subject: &StringValidator,
+        is_none: bool,
+    ) {
         if !self.is_mandatory && is_none {
             return;
         }
         let (mandatory_rule, length_rule, special_char_rule) = self.rules();
-        mandatory_rule.check(msgs, subject);
-        if !msgs.is_empty() {
+        mandatory_rule.check(messages, subject);
+        if !messages.is_empty() {
             return;
         }
-        length_rule.check(msgs, subject);
-        special_char_rule.check(msgs, subject);
+        length_rule.check(messages, subject);
+        special_char_rule.check(messages, subject);
     }
 }
 
@@ -92,8 +97,8 @@ impl PasswordRules {
 pub struct PasswordError(pub ValidateErrorStore);
 
 impl ValidationCheck for PasswordError {
-    fn validate_new(msgs: ValidateErrorStore) -> Self {
-        Self(msgs)
+    fn validate_new(messages: ValidateErrorStore) -> Self {
+        Self(messages)
     }
 }
 
@@ -116,9 +121,9 @@ impl Password {
         let is_none = s.is_none();
         let s = s.unwrap_or_default();
         let subject = s.as_string_validator();
-        let mut msgs = ValidateErrorCollector::new();
-        rules.check(&mut msgs, &subject, is_none);
-        PasswordError::validate_check(msgs)?;
+        let mut messages = ValidateErrorCollector::new();
+        rules.check(&mut messages, &subject, is_none);
+        PasswordError::validate_check(messages)?;
         Ok(Self(s.to_string(), is_none))
     }
 
@@ -145,11 +150,7 @@ impl Password {
     }
 
     pub fn into_option(self) -> Option<Password> {
-        if self.1 {
-            None
-        } else {
-            Some(self)
-        }
+        if self.1 { None } else { Some(self) }
     }
 }
 

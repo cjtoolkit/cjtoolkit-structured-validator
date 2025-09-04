@@ -18,9 +18,9 @@ pub struct StringMandatoryRules {
 }
 
 impl StringMandatoryRules {
-    pub fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator) {
+    pub fn check(&self, messages: &mut ValidateErrorCollector, subject: &StringValidator) {
         if self.is_mandatory && subject.is_empty() {
-            msgs.push((
+            messages.push((
                 "Cannot be empty".to_string(),
                 Box::new(StringMandatoryLocale),
             ));
@@ -59,10 +59,10 @@ pub struct StringLengthRules {
 }
 
 impl StringLengthRules {
-    pub fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator) {
+    pub fn check(&self, messages: &mut ValidateErrorCollector, subject: &StringValidator) {
         if let Some(min_length) = self.min_length {
             if subject.count_graphemes() < min_length {
-                msgs.push((
+                messages.push((
                     format!("Must be at least {} characters", min_length),
                     Box::new(StringLengthLocale::MinLength(min_length)),
                 ));
@@ -70,7 +70,7 @@ impl StringLengthRules {
         }
         if let Some(max_length) = self.max_length {
             if subject.count_graphemes() > max_length {
-                msgs.push((
+                messages.push((
                     format!("Must be at most {} characters", max_length),
                     Box::new(StringLengthLocale::MaxLength(max_length)),
                 ));
@@ -123,10 +123,10 @@ pub struct StringSpecialCharRules {
 }
 
 impl StringSpecialCharRules {
-    pub fn check(&self, msgs: &mut ValidateErrorCollector, subject: &StringValidator) {
+    pub fn check(&self, messages: &mut ValidateErrorCollector, subject: &StringValidator) {
         if self.must_have_special_chars {
             if !subject.has_special_chars() {
-                msgs.push((
+                messages.push((
                     "Must contain at least one special character".to_string(),
                     Box::new(StringSpecialCharLocale::MustHaveSpecialChars),
                 ));
@@ -134,7 +134,7 @@ impl StringSpecialCharRules {
         }
         if self.must_have_uppercase && self.must_have_lowercase {
             if !subject.has_ascii_uppercase_and_lowercase() {
-                msgs.push((
+                messages.push((
                     "Must contain at least one uppercase and lowercase letter".to_string(),
                     Box::new(StringSpecialCharLocale::MustHaveUppercaseAndLowercase),
                 ));
@@ -142,7 +142,7 @@ impl StringSpecialCharRules {
         } else {
             if self.must_have_uppercase {
                 if !subject.has_ascii_uppercase() {
-                    msgs.push((
+                    messages.push((
                         "Must contain at least one uppercase letter".to_string(),
                         Box::new(StringSpecialCharLocale::MustHaveUppercase),
                     ));
@@ -150,7 +150,7 @@ impl StringSpecialCharRules {
             }
             if self.must_have_lowercase {
                 if !subject.has_ascii_lowercase() {
-                    msgs.push((
+                    messages.push((
                         "Must contain at least one lowercase letter".to_string(),
                         Box::new(StringSpecialCharLocale::MustHaveLowercase),
                     ));
@@ -159,7 +159,7 @@ impl StringSpecialCharRules {
         }
         if self.must_have_digit {
             if !subject.has_ascii_digit() {
-                msgs.push((
+                messages.push((
                     "Must contain at least one digit".to_string(),
                     Box::new(StringSpecialCharLocale::MustHaveDigit),
                 ));
@@ -178,21 +178,21 @@ mod tests {
 
         #[test]
         fn test_string_mandatory_rule_check_empty_string() {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "".as_string_validator();
             let rule = StringMandatoryRules { is_mandatory: true };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 1);
-            assert_eq!(msgs.0[0].0, "Cannot be empty");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Cannot be empty");
         }
 
         #[test]
         fn test_string_mandatory_rule_check_not_empty_string() {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "Hello".as_string_validator();
             let rule = StringMandatoryRules { is_mandatory: true };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 0);
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 0);
         }
     }
 
@@ -201,28 +201,28 @@ mod tests {
 
         #[test]
         fn test_string_length_rule_check_empty_string() {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "".as_string_validator();
             let rule = StringLengthRules {
                 min_length: Some(5),
                 max_length: Some(10),
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 1);
-            assert_eq!(msgs.0[0].0, "Must be at least 5 characters");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Must be at least 5 characters");
         }
 
         #[test]
         fn test_string_length_rule_check_too_long_string() {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "Hello".as_string_validator();
             let rule = StringLengthRules {
                 min_length: Some(2),
                 max_length: Some(4),
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 1);
-            assert_eq!(msgs.0[0].0, "Must be at most 4 characters");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Must be at most 4 characters");
         }
     }
 
@@ -231,7 +231,7 @@ mod tests {
 
         #[test]
         fn test_string_special_char_rule_check_empty_string() {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "".as_string_validator();
             let rule = StringSpecialCharRules {
                 must_have_uppercase: true,
@@ -239,19 +239,22 @@ mod tests {
                 must_have_special_chars: true,
                 must_have_digit: true,
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 3);
-            assert_eq!(msgs.0[0].0, "Must contain at least one special character");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 3);
             assert_eq!(
-                msgs.0[1].0,
+                messages.0[0].0,
+                "Must contain at least one special character"
+            );
+            assert_eq!(
+                messages.0[1].0,
                 "Must contain at least one uppercase and lowercase letter"
             );
-            assert_eq!(msgs.0[2].0, "Must contain at least one digit");
+            assert_eq!(messages.0[2].0, "Must contain at least one digit");
         }
 
         #[test]
         fn test_string_special_char_rule_check_not_empty_string() {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "Hello".as_string_validator();
             let rule = StringSpecialCharRules {
                 must_have_uppercase: true,
@@ -259,16 +262,19 @@ mod tests {
                 must_have_special_chars: true,
                 must_have_digit: true,
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 2);
-            assert_eq!(msgs.0[0].0, "Must contain at least one special character");
-            assert_eq!(msgs.0[1].0, "Must contain at least one digit");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 2);
+            assert_eq!(
+                messages.0[0].0,
+                "Must contain at least one special character"
+            );
+            assert_eq!(messages.0[1].0, "Must contain at least one digit");
         }
 
         #[test]
         fn test_string_special_char_rule_check_not_empty_string_with_uppercase_and_lowercase_and_symbol()
          {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messsages = ValidateErrorCollector::new();
             let subject = "Hello@".as_string_validator();
             let rule = StringSpecialCharRules {
                 must_have_uppercase: true,
@@ -276,15 +282,15 @@ mod tests {
                 must_have_special_chars: true,
                 must_have_digit: true,
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 1);
-            assert_eq!(msgs.0[0].0, "Must contain at least one digit");
+            rule.check(&mut messsages, &subject);
+            assert_eq!(messsages.len(), 1);
+            assert_eq!(messsages.0[0].0, "Must contain at least one digit");
         }
 
         #[test]
         fn test_string_special_char_rule_check_not_empty_string_with_uppercase_and_lowercase_and_digit()
          {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "Hello1".as_string_validator();
             let rule = StringSpecialCharRules {
                 must_have_uppercase: true,
@@ -292,15 +298,18 @@ mod tests {
                 must_have_special_chars: true,
                 must_have_digit: true,
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 1);
-            assert_eq!(msgs.0[0].0, "Must contain at least one special character");
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(
+                messages.0[0].0,
+                "Must contain at least one special character"
+            );
         }
 
         #[test]
         fn test_string_special_char_rule_check_not_empty_string_with_uppercase_and_lowercase_digit_and_symbol()
          {
-            let mut msgs = ValidateErrorCollector::new();
+            let mut messages = ValidateErrorCollector::new();
             let subject = "Hello1@".as_string_validator();
             let rule = StringSpecialCharRules {
                 must_have_uppercase: true,
@@ -308,8 +317,8 @@ mod tests {
                 must_have_special_chars: true,
                 must_have_digit: true,
             };
-            rule.check(&mut msgs, &subject);
-            assert_eq!(msgs.len(), 0);
+            rule.check(&mut messages, &subject);
+            assert_eq!(messages.len(), 0);
         }
     }
 }
