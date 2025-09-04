@@ -148,7 +148,7 @@ impl Password {
         });
 
         PasswordError::validate_check(msgs)?;
-        Ok(Self(self.as_str().to_string(), self.1))
+        Ok(self.clone())
     }
 
     pub fn as_str(&self) -> &str {
