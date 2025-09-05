@@ -97,7 +97,7 @@ impl ValidationCheck for IntegerError {
 /// A struct representing an integer value paired with a boolean flag.
 ///
 /// The `Integer` struct contains:
-/// - A signed integer value of type `isize`.
+/// - A signed integer value of a type `isize`.
 /// - A boolean flag associated with the integer.
 ///
 /// The struct derives:
@@ -204,7 +204,7 @@ impl Integer {
     ///
     /// # Errors
     ///
-    /// This function may return an `IntegerError` in scenarios such as:
+    /// This function may return an `IntegerError` in scenarios such as
     /// - The input value is `None` and cannot be handled appropriately.
     /// - The value does not comply with the validation or conversion rules.
     pub fn parse(s: Option<isize>) -> Result<Self, IntegerError> {

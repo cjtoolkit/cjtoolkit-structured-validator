@@ -239,7 +239,7 @@ impl Password {
     /// Parses the provided input string (`Option<&str>`) and attempts to create an instance of the type implementing this function.
     ///
     /// This function applies the default set of password rules to validate and process the input.
-    /// If the string is valid according to the default rules, it returns the constructed instance (`Self`) wrapped in a `Result::Ok`.
+    /// If the string is valid, according to the default rules, it returns the constructed instance (`Self`) wrapped in a `Result::Ok`.
     /// Otherwise, it returns a `PasswordError` wrapped in a `Result::Err`.
     ///
     /// # Arguments

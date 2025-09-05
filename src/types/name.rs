@@ -80,7 +80,7 @@ impl NameRules {
 ///
 /// This error type is part of domain-specific validation and is used to encapsulate
 /// detailed validation errors encountered while validating name-related fields. It
-/// provides meaningful context around the failure to assist in debugging and error handling.
+/// provides meaningful context around the failure to help in debugging and error handling.
 ///
 /// # Derives
 /// - `Debug`: Allows the error to be formatted using the `{:?}` formatter.
@@ -238,7 +238,7 @@ impl Name {
     ///
     /// This function assumes the type `Name` is the same as the type of `self` and
     /// that `self` is a tuple-like structure where the second element (`self.1`) is
-    /// a boolean value used as the condition for determining result.
+    /// a boolean value used as the condition for determining a result.
     pub fn into_option(self) -> Option<Name> {
         if self.1 { None } else { Some(self) }
     }

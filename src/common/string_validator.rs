@@ -18,7 +18,7 @@ impl<'a> StringValidator<'a> {
     /// - `,`, `.`, `<`, `>`, `/`, `?`
     ///
     /// # Notes
-    /// This constant is immutable and should be used for read-only purposes.
+    /// This constant is immutable and should be used for read-only.
     pub const SPECIAL_CHARS: [char; 30] = [
         '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}',
         '\\', '|', ';', ':', '\'', '"', ',', '.', '<', '>', '/', '?',
@@ -115,7 +115,7 @@ impl<'a> StringValidator<'a> {
     /// Checks if the string slice contains any ASCII lowercase characters.
     ///
     /// # Returns
-    /// - `true` if the string contains at least one ASCII lowercase character (`'a'..='z'`).
+    /// - `true` if the string contains at least one ASCII lowercase character (`'a-zA-Z'`).
     /// - `false` if no ASCII lowercase characters are found.
     ///
     /// This method iterates through all the characters of the inner string (`self.0`)
@@ -229,7 +229,7 @@ impl<'a> StringValidator<'a> {
 trait StrSealed {}
 
 /// A trait providing an extension for string validation functionality. This trait is sealed and
-/// cannot be implemented outside of the module where it is defined. It is designed to extend
+/// cannot be implemented outside the module where it is defined. It is designed to extend
 /// the functionality of types implementing the private `StrSealed` trait.
 ///
 /// # Required Methods

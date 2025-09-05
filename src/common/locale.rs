@@ -72,7 +72,7 @@ impl From<f64> for LocaleValue {
 /**
  * Represents the localization data for a specific locale.
  * This structure holds locale-specific information, such as the locale's name
- * and associated arguments or values used for localization purposes.
+ * and associated arguments or values used for localization.
  */
 pub struct LocaleData {
     pub name: String,
@@ -112,7 +112,7 @@ impl LocaleData {
     ///
     /// # Returns
     ///
-    /// A new instance of the structure populated with the provided `name` and `args`.
+    /// A new instance of the structure is populated with the provided `name` and `args`.
     ///
     /// # Example
     ///
@@ -175,7 +175,7 @@ pub trait LocaleMessage: Send + Sync {
 /// a localizable message for the associated validation error.
 ///
 /// This structure is designed to be `Default` and makes use of an `Arc<[]>` to share ownership
-/// of the data, enabling efficient cloning and concurrent usage in multi-threaded contexts.
+/// of the data, enabling efficient cloning and concurrent usage in multithreaded contexts.
 ///
 /// # Fields
 /// - `0`: A reference-counted array (`Arc<[]>`) of tuples containing:

@@ -14,7 +14,7 @@ use crate::common::validation_check::ValidationCheck;
 /// * `is_mandatory` - A boolean flag that specifies whether the value is required to be present.
 /// * `min` - An optional minimum value (inclusive) of type `usize`.
 ///            If `None`, no minimum constraint is applied.
-/// * `max` - An optional maximum value (inclusive) of type `usize`.
+/// * `max` - An optional maximum value (inclusive) of a type `usize`.
 ///            If `None`, no maximum constraint is applied.
 pub struct UnsignedRules {
     pub is_mandatory: bool,
@@ -120,7 +120,7 @@ impl Unsigned {
     /// An `Ok(Self)` containing the constructed object, or an `Err(UnsignedError)` if the input fails validation.
     ///
     /// # Errors
-    /// Returns an `UnsignedError` if the input value does not satisfy the provided validation rules.
+    /// Return an `UnsignedError` if the input value does not satisfy the provided validation rules.
     ///
     /// # Behavior
     /// 1. Checks whether the provided value `s` is `None`.
@@ -143,7 +143,7 @@ impl Unsigned {
     ///
     /// # Parameters
     /// - `s`: An `Option<usize>` value to be parsed. If `Some(value)` is provided, the method processes the value;
-    ///   if `None`, it skips the parsing and behavior depends on subsequent logic.
+    ///   if `None`, it skips the parsing and behavior depends on later logic.
     ///
     /// # Returns
     /// - `Result<Self, UnsignedError>`:

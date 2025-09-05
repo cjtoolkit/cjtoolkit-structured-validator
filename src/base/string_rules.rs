@@ -157,7 +157,7 @@ impl StringLengthRules {
     /// # Behavior
     ///
     /// 1. If a minimum length (`min_length`) is specified via `self` and the `subject` string's
-    ///    grapheme count is less than the minimum, an error message is added to the `messages` collector
+    ///    grapheme count is less than the minimum; an error message is added to the `messages` collector
     ///    indicating that the string must be at least the specified number of characters.
     /// 2. If a maximum length (`max_length`) is specified via `self` and the `subject` string's
     ///    grapheme count exceeds the maximum, an error message is added to the `messages` collector
@@ -166,7 +166,7 @@ impl StringLengthRules {
     /// # Notes
     ///
     /// This function assumes the `count_graphemes` method is available on the `subject` to properly count
-    /// grapheme clusters, ensuring correctness when dealing with multi-byte characters or special Unicode
+    /// grapheme clusters, ensuring correctness when dealing with multibyte characters or special Unicode
     /// characters.
     ///
     /// # Examples
@@ -266,7 +266,7 @@ impl LocaleMessage for StringSpecialCharLocale {
     }
 }
 
-/// A structure that defines rules for validating the presence of specific categories
+/// A structure that defines rules for validating the presence
 /// of characters in a string. This can be used to enforce certain validation criteria
 /// for strings containing uppercase letters, lowercase letters, special characters,
 /// and numeric digits.

@@ -105,7 +105,7 @@ impl Default for Description {
 
 impl Description {
     /// Parses a custom input string according to specified validation rules and returns a
-    /// structured description, or an error if the input violates the rules.
+    /// structured description or an error if the input violates the rules.
     ///
     /// # Parameters
     ///
@@ -129,7 +129,7 @@ impl Description {
     /// 3. Collects validation errors using a `ValidateErrorCollector`.
     /// 4. Applies the provided `rules` via the `check` method to validate the string and records
     ///    any issues with the `ValidateErrorCollector`.
-    /// 5. If validation errors were collected by the rules, a `DescriptionError` is returned.
+    /// 5. If the rules collected validation errors, a `DescriptionError` is returned.
     /// 6. If no validation errors are found, returns a successfully parsed `Self` object with
     ///    the input string and a flag indicating whether it originated from a `None` value.
     ///
@@ -163,7 +163,7 @@ impl Description {
         Ok(Self(s.to_string(), is_none))
     }
 
-    /// Parses an optional string slice into an instance of the implementing type, utilizing the default parsing rules.
+    /// Parses an optional string slice into an instance of the implementing type, using the default parsing rules.
     ///
     /// # Arguments
     ///
@@ -171,7 +171,7 @@ impl Description {
     ///
     /// # Returns
     ///
-    /// * `Ok(Self)` - If the parsing succeeds and the string conforms to the expected format.
+    /// * `Ok(Self)` - If the parsing succeeds, and the string conforms to the expected format.
     /// * `Err(DescriptionError)` - If the parsing fails due to invalid input or does not meet the required rules.
     ///
     /// # Behavior
