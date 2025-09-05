@@ -99,3 +99,31 @@ impl Name {
         if self.1 { None } else { Some(self) }
     }
 }
+
+pub mod name_alias {
+    use super::*;
+
+    pub type TitleRules = NameRules;
+    pub type TitleError = NameError;
+    pub type Title = Name;
+
+    pub type FirstNameRules = NameRules;
+    pub type FirstNameError = NameError;
+    pub type FirstName = Name;
+
+    pub type ForeNameRules = NameRules;
+    pub type ForeNameError = NameError;
+    pub type ForeName = Name;
+
+    pub type MiddleNameRules = NameRules;
+    pub type MiddleNameError = NameError;
+    pub type MiddleName = Name;
+
+    pub type LastNameRules = NameRules;
+    pub type LastNameError = NameError;
+    pub type LastName = Name;
+
+    pub type AddressLineRules = NameRules;
+    pub type AddressLineError = NameError;
+    pub type AddressLine = Name;
+}

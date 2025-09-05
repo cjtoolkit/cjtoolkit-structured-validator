@@ -102,3 +102,23 @@ impl Description {
         if self.1 { None } else { Some(self) }
     }
 }
+
+pub mod description_alias {
+    use super::*;
+
+    pub type TextRules = DescriptionRules;
+    pub type TextError = DescriptionError;
+    pub type Text = Description;
+
+    pub type BodyRules = DescriptionRules;
+    pub type BodyError = DescriptionError;
+    pub type Body = Description;
+
+    pub type SummaryRules = DescriptionRules;
+    pub type SummaryError = DescriptionError;
+    pub type Summary = Description;
+
+    pub type IngredientsRules = DescriptionRules;
+    pub type IngredientsError = DescriptionError;
+    pub type Ingredients = Description;
+}
