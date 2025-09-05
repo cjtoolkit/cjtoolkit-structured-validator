@@ -28,22 +28,26 @@ impl NumberMandatoryRules {
     }
 }
 
-pub enum NumberRangeLocale {
-    MinValue(LocaleValue),
-    MaxValue(LocaleValue),
+pub enum NumberRangeLocale<T: Into<LocaleValue> + Send + Sync + Clone> {
+    MinValue(T),
+    MaxValue(T),
 }
 
-impl LocaleMessage for NumberRangeLocale {
+impl<T: Into<LocaleValue> + Send + Sync + Clone> LocaleMessage for NumberRangeLocale<T>
+where
+    LocaleValue: From<T>,
+{
     fn get_locale_data(&self) -> LocaleData {
         use LocaleData as ld;
+        use LocaleValue as lv;
         match self {
             Self::MinValue(min) => ld::new_with_vec(
                 "validate-number-min-value",
-                vec![("min".to_string(), min.clone())],
+                vec![("min".to_string(), lv::from(min.clone()))],
             ),
             Self::MaxValue(max) => ld::new_with_vec(
                 "validate-number-max-value",
-                vec![("max".to_string(), max.clone())],
+                vec![("max".to_string(), lv::from(max.clone()))],
             ),
         }
     }
