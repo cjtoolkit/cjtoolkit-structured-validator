@@ -1,5 +1,7 @@
 use crate::base::string_rules::StringMandatoryRules;
-use crate::common::locale::{LocaleMessage, ValidateErrorCollector, ValidateErrorStore};
+use crate::common::locale::{
+    LocaleData, LocaleMessage, ValidateErrorCollector, ValidateErrorStore,
+};
 use crate::common::string_validator::{StrValidationExtension, StringValidator};
 use crate::common::validation_check::ValidationCheck;
 use email_address_parser::EmailAddress;
@@ -67,16 +69,11 @@ pub enum EmailAddressLocale {
 }
 
 impl LocaleMessage for EmailAddressLocale {
-    fn get_locale_data(&self) -> crate::common::locale::LocaleData {
+    fn get_locale_data(&self) -> LocaleData {
+        use LocaleData as ld;
         match self {
-            Self::InvalidEmail => crate::common::locale::LocaleData {
-                name: "validate-email-invalid".to_string(),
-                args: Default::default(),
-            },
-            Self::DoesNotMatch => crate::common::locale::LocaleData {
-                name: "validate-email-does-not-match".to_string(),
-                args: Default::default(),
-            },
+            Self::InvalidEmail => ld::new("validate-email-invalid"),
+            Self::DoesNotMatch => ld::new("validate-email-does-not-match"),
         }
     }
 }
@@ -126,7 +123,7 @@ impl Email {
     }
 
     pub fn as_str(&self) -> &str {
-        &self.0   
+        &self.0
     }
 
     pub fn into_option(self) -> Option<Email> {

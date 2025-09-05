@@ -115,10 +115,7 @@ pub struct PasswordDoesNotMatchLocale;
 
 impl LocaleMessage for PasswordDoesNotMatchLocale {
     fn get_locale_data(&self) -> LocaleData {
-        LocaleData {
-            name: "validate-password-does-not-match".to_string(),
-            args: Default::default(),
-        }
+        LocaleData::new("validate-password-does-not-match")
     }
 }
 

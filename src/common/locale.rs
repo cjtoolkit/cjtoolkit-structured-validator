@@ -17,6 +17,12 @@ impl From<String> for LocaleValue {
     }
 }
 
+impl From<&str> for LocaleValue {
+    fn from(s: &str) -> Self {
+        Self::String(s.to_string())
+    }
+}
+
 impl From<usize> for LocaleValue {
     fn from(s: usize) -> Self {
         Self::Uint(s)
@@ -38,6 +44,22 @@ impl From<f64> for LocaleValue {
 pub struct LocaleData {
     pub name: String,
     pub args: HashMap<String, LocaleValue>,
+}
+
+impl LocaleData {
+    pub fn new(name: &str) -> Self {
+        Self {
+            name: name.to_string(),
+            args: Default::default(),
+        }
+    }
+
+    pub fn new_with_vec(name: &str, args: Vec<(String, LocaleValue)>) -> Self {
+        Self {
+            name: name.to_string(),
+            args: args.into_iter().collect(),
+        }
+    }
 }
 
 pub trait LocaleMessage: Send + Sync {

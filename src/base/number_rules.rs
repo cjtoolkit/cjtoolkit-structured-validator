@@ -5,10 +5,7 @@ pub struct NumberMandatoryLocale;
 
 impl LocaleMessage for NumberMandatoryLocale {
     fn get_locale_data(&self) -> LocaleData {
-        LocaleData {
-            name: "validate-cannot-be-empty".to_string(),
-            args: Default::default(),
-        }
+        LocaleData::new("validate-cannot-be-empty")
     }
 }
 
@@ -38,15 +35,16 @@ pub enum NumberRangeLocale {
 
 impl LocaleMessage for NumberRangeLocale {
     fn get_locale_data(&self) -> LocaleData {
+        use LocaleData as ld;
         match self {
-            Self::MinValue(min) => LocaleData {
-                name: "validate-number-min-value".to_string(),
-                args: vec![("min".to_string(), min.clone())].into_iter().collect(),
-            },
-            Self::MaxValue(max) => LocaleData {
-                name: "validate-number-max-value".to_string(),
-                args: vec![("max".to_string(), max.clone())].into_iter().collect(),
-            },
+            Self::MinValue(min) => ld::new_with_vec(
+                "validate-number-min-value",
+                vec![("min".to_string(), min.clone())],
+            ),
+            Self::MaxValue(max) => ld::new_with_vec(
+                "validate-number-max-value",
+                vec![("max".to_string(), max.clone())],
+            ),
         }
     }
 }

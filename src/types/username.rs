@@ -90,10 +90,7 @@ pub struct UsernameTakenLocale;
 
 impl LocaleMessage for UsernameTakenLocale {
     fn get_locale_data(&self) -> LocaleData {
-        LocaleData {
-            name: "validate-username-taken".to_string(),
-            args: Default::default(),
-        }
+        LocaleData::new("validate-username-taken")
     }
 }
 

@@ -5,10 +5,7 @@ pub struct StringMandatoryLocale;
 
 impl LocaleMessage for StringMandatoryLocale {
     fn get_locale_data(&self) -> LocaleData {
-        LocaleData {
-            name: "validate-cannot-be-empty".to_string(),
-            args: Default::default(),
-        }
+        LocaleData::new("validate-cannot-be-empty")
     }
 }
 
@@ -35,19 +32,17 @@ pub enum StringLengthLocale {
 
 impl LocaleMessage for StringLengthLocale {
     fn get_locale_data(&self) -> LocaleData {
+        use LocaleData as ld;
+        use LocaleValue as lv;
         match self {
-            Self::MinLength(min_length) => LocaleData {
-                name: "validate-min-length".to_string(),
-                args: vec![("min".to_string(), LocaleValue::Uint(*min_length))]
-                    .into_iter()
-                    .collect(),
-            },
-            Self::MaxLength(max_length) => LocaleData {
-                name: "validate-max-length".to_string(),
-                args: vec![("max".to_string(), LocaleValue::Uint(*max_length))]
-                    .into_iter()
-                    .collect(),
-            },
+            Self::MinLength(min_length) => ld::new_with_vec(
+                "validate-min-length",
+                vec![("min".to_string(), lv::from(*min_length))],
+            ),
+            Self::MaxLength(max_length) => ld::new_with_vec(
+                "validate-max-length",
+                vec![("max".to_string(), lv::from(*max_length))],
+            ),
         }
     }
 }
@@ -89,27 +84,15 @@ pub enum StringSpecialCharLocale {
 
 impl LocaleMessage for StringSpecialCharLocale {
     fn get_locale_data(&self) -> LocaleData {
+        use LocaleData as ld;
         match self {
-            Self::MustHaveSpecialChars => LocaleData {
-                name: "validate-must-have-special-chars".to_string(),
-                args: Default::default(),
-            },
-            Self::MustHaveUppercaseAndLowercase => LocaleData {
-                name: "validate-must-have-uppercase-and-lowercase".to_string(),
-                args: Default::default(),
-            },
-            Self::MustHaveUppercase => LocaleData {
-                name: "validate-must-have-uppercase".to_string(),
-                args: Default::default(),
-            },
-            Self::MustHaveLowercase => LocaleData {
-                name: "validate-must-have-lowercase".to_string(),
-                args: Default::default(),
-            },
-            Self::MustHaveDigit => LocaleData {
-                name: "validate-must-have-digit".to_string(),
-                args: Default::default(),
-            },
+            Self::MustHaveSpecialChars => ld::new("validate-must-have-special-chars"),
+            Self::MustHaveUppercaseAndLowercase => {
+                ld::new("validate-must-have-uppercase-and-lowercase")
+            }
+            Self::MustHaveUppercase => ld::new("validate-must-have-uppercase"),
+            Self::MustHaveLowercase => ld::new("validate-must-have-lowercase"),
+            Self::MustHaveDigit => ld::new("validate-must-have-digit"),
         }
     }
 }

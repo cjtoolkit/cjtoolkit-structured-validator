@@ -1,5 +1,7 @@
 use crate::base::string_rules::StringMandatoryRules;
-use crate::common::locale::{LocaleMessage, ValidateErrorCollector, ValidateErrorStore};
+use crate::common::locale::{
+    LocaleData, LocaleMessage, ValidateErrorCollector, ValidateErrorStore,
+};
 use crate::common::string_validator::{StrValidationExtension, StringValidator};
 use crate::common::validation_check::ValidationCheck;
 use thiserror::Error;
@@ -64,11 +66,8 @@ impl Default for Url {
 pub struct UrlValueLocale;
 
 impl LocaleMessage for UrlValueLocale {
-    fn get_locale_data(&self) -> crate::common::locale::LocaleData {
-        crate::common::locale::LocaleData {
-            name: "validate-invalid-url".to_string(),
-            args: Default::default(),
-        }
+    fn get_locale_data(&self) -> LocaleData {
+        LocaleData::new("validate-invalid-url")
     }
 }
 
@@ -84,7 +83,7 @@ impl Url {
             Ok(url) => url,
             Err(_) => {
                 let mut messages = ValidateErrorCollector::new();
-                messages.push(("Invalid Url".to_string(), Box::new(UrlValueLocale)));
+                messages.push(("Invalid URL".to_string(), Box::new(UrlValueLocale)));
                 return Err(UrlError(messages.into()));
             }
         };
