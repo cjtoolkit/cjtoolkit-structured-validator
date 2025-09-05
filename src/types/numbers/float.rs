@@ -1,3 +1,5 @@
+//! This module contains structures and traits for working with floating-point numbers.
+
 use crate::base::number_rules::{NumberMandatoryRules, NumberRangeRules};
 use crate::common::locale::{ValidateErrorCollector, ValidateErrorStore};
 use crate::common::validation_check::ValidationCheck;

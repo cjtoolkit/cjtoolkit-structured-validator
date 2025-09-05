@@ -1,3 +1,5 @@
+//! This module contains structures and traits for working with strings.
+
 use unicode_segmentation::UnicodeSegmentation;
 
 /// A structure for validating strings with specific constraints.

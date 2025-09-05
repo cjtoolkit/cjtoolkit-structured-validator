@@ -1,3 +1,5 @@
+//! This module contains structures and traits for working with text-based descriptions.
+
 use crate::base::string_rules::{StringLengthRules, StringMandatoryRules};
 use crate::common::locale::{ValidateErrorCollector, ValidateErrorStore};
 use crate::common::string_validator::{StrValidationExtension, StringValidator};

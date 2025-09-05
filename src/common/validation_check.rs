@@ -1,3 +1,5 @@
+//! This module contains structures and traits for performing validation checks.
+
 use crate::common::locale::{ValidateErrorCollector, ValidateErrorStore};
 
 /// A trait for performing validation checks and handling validation-related errors.

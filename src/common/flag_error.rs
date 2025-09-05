@@ -1,3 +1,9 @@
+//! This module contains a function for flagging an error in a `Result` type.
+//!
+//! # Use Case
+//! - Propagating errors in a `Result` type.
+//! - Tracking whether an error occurred in a `Result` type.
+
 /// Flags an error while propagating the result of a `Result` type.
 ///
 /// This function takes a mutable boolean reference (`flag`) and a `Result` value.

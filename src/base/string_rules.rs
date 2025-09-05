@@ -1,3 +1,5 @@
+//! This module contains structures and traits for defining rules for validating strings.
+
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
 use crate::common::string_validator::StringValidator;
 

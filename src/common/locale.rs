@@ -1,3 +1,5 @@
+//! This module contains structures and traits for working with locales and localization.
+
 use blake3::Hash;
 use std::collections::HashMap;
 use std::fmt::Debug;

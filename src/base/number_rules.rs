@@ -1,3 +1,6 @@
+//! This module contains the `NumberMandatoryRules` and `NumberRangeRules` structs,
+//! which are used to define rules for validating numerical values.
+
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
 use std::fmt::Display;
 
@@ -135,8 +138,8 @@ where
 /// - `Display`: The type can be formatted as a string for display purposes.
 ///
 /// # Fields
-/// - `min` (Option<T>): The optional lower bound of the range. If `None`, there is no restriction on the minimum value.
-/// - `max` (Option<T>): The optional upper bound of the range. If `None`, there is no restriction on the maximum value.
+/// - `min` (`Option<T>`): The optional lower bound of the range. If `None`, there is no restriction on the minimum value.
+/// - `max` (`Option<T>`): The optional upper bound of the range. If `None`, there is no restriction on the maximum value.
 ///
 pub struct NumberRangeRules<T>
 where
