@@ -1,3 +1,14 @@
+//! This module contains structures and traits for working with names.
+//!
+//! The `Name` type is a tuple struct consisting of a `String` value and a `bool` flag.
+//! The `String` value represents the name, and the boolean flag can be used for additional
+//! semantics or functionality (e.g., marking a name as "active" or "enabled").
+//!
+//! The `NameRules` type defines the validation rules for a name field. It is used to
+//! define whether the name field is mandatory and the permissible length range.
+//!
+//! The `NameError` type is used to encapsulate validation errors specific to names
+
 use crate::base::string_rules::{StringLengthRules, StringMandatoryRules};
 use crate::common::locale::{ValidateErrorCollector, ValidateErrorStore};
 use crate::common::string_validator::{StrValidationExtension, StringValidator};

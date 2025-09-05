@@ -171,6 +171,9 @@ pub trait IsUsernameTakenAsync {
 ///
 /// This struct can be used as part of an error handling system or localization framework
 /// to represent scenarios where the provided username is already in use.
+///
+/// # Key
+/// `validate-username-taken`
 pub struct UsernameTakenLocale;
 
 impl LocaleMessage for UsernameTakenLocale {
