@@ -11,6 +11,30 @@ pub enum LocaleValue {
     Float(f64),
 }
 
+impl From<String> for LocaleValue {
+    fn from(s: String) -> Self {
+        Self::String(s)
+    }
+}
+
+impl From<usize> for LocaleValue {
+    fn from(s: usize) -> Self {
+        Self::Uint(s)
+    }
+}
+
+impl From<isize> for LocaleValue {
+    fn from(s: isize) -> Self {
+        Self::Int(s)
+    }
+}
+
+impl From<f64> for LocaleValue {
+    fn from(s: f64) -> Self {
+        Self::Float(s)
+    }
+}
+
 pub struct LocaleData {
     pub name: String,
     pub args: HashMap<String, LocaleValue>,
