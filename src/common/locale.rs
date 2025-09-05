@@ -94,20 +94,20 @@ impl Clone for ValidateErrorStore {
 }
 
 impl ValidateErrorStore {
-    fn hash(&self) -> Hash {
-        let mut hasher = blake3::Hasher::new();
-        for error in self.0.iter() {
-            hasher.update(error.0.as_bytes());
-        }
-        hasher.finalize()
-    }
-
     pub fn as_original_message(&self) -> Arc<[String]> {
         self.as_original_message_vec().into()
     }
 
     pub fn as_original_message_vec(&self) -> Vec<String> {
         self.0.iter().map(|e| e.0.clone()).collect()
+    }
+
+    fn hash(&self) -> Hash {
+        let mut hasher = blake3::Hasher::new();
+        for error in self.0.iter() {
+            hasher.update(error.0.as_bytes());
+        }
+        hasher.finalize()
     }
 }
 

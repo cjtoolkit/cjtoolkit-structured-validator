@@ -86,3 +86,85 @@ where
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    mod number_mandatory_rule {
+        use super::*;
+
+        #[test]
+        fn test_empty_value() {
+            let mut messages = ValidateErrorCollector::new();
+            let subject: Option<f64> = None;
+            let rules = NumberMandatoryRules { is_mandatory: true };
+            rules.check(&mut messages, subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Cannot be empty");
+        }
+
+        #[test]
+        fn test_not_empty_value() {
+            let mut messages = ValidateErrorCollector::new();
+            let subject: Option<f64> = Some(1.0);
+            let rules = NumberMandatoryRules { is_mandatory: true };
+            rules.check(&mut messages, subject);
+            assert_eq!(messages.len(), 0);
+        }
+    }
+
+    mod number_range_rule {
+        use super::*;
+
+        #[test]
+        fn test_invalid_min_value_rule() {
+            let mut messages = ValidateErrorCollector::new();
+            let subject: Option<f64> = Some(1.0);
+            let rules = NumberRangeRules {
+                min: Some(2.0),
+                max: None,
+            };
+            rules.check(&mut messages, subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Must be at least 2");
+        }
+
+        #[test]
+        fn test_valid_min_value_rule() {
+            let mut messages = ValidateErrorCollector::new();
+            let subject: Option<f64> = Some(2.0);
+            let rules = NumberRangeRules {
+                min: Some(2.0),
+                max: None,
+            };
+            rules.check(&mut messages, subject);
+            assert_eq!(messages.len(), 0);
+        }
+
+        #[test]
+        fn test_max_value_rule() {
+            let mut messages = ValidateErrorCollector::new();
+            let subject: Option<f64> = Some(1.0);
+            let rules = NumberRangeRules {
+                min: None,
+                max: Some(2.0),
+            };
+            rules.check(&mut messages, subject);
+            assert_eq!(messages.len(), 0);
+        }
+
+        #[test]
+        fn test_valid_max_value_rule() {
+            let mut messages = ValidateErrorCollector::new();
+            let subject: Option<f64> = Some(2.1);
+            let rules = NumberRangeRules {
+                min: None,
+                max: Some(2.0),
+            };
+            rules.check(&mut messages, subject);
+            assert_eq!(messages.len(), 1);
+            assert_eq!(messages.0[0].0, "Must be at most 2");
+        }
+    }
+}
