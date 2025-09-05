@@ -164,6 +164,12 @@ mod tests {
         }
     }
 
+    impl IsUsernameTakenAsync for FakeUsernameCheckService {
+        async fn is_username_taken_async(&self, username: &str) -> bool {
+            username == self.0.as_str()
+        }
+    }
+
     #[test]
     fn username_is_taken() {
         let username_result = Username("taken".to_string(), false);
@@ -182,6 +188,30 @@ mod tests {
         assert!(
             username_result
                 .check_username_taken(&FakeUsernameCheckService("taken".to_string()))
+                .is_ok()
+        )
+    }
+
+    #[tokio::test]
+    async fn username_is_taken_async() {
+        let username_result = Username("taken".to_string(), false);
+
+        assert!(
+            username_result
+                .check_username_taken_async(&FakeUsernameCheckService("taken".to_string()))
+                .await
+                .is_err()
+        )
+    }
+
+    #[tokio::test]
+    async fn username_is_not_taken_async() {
+        let username_result = Username("not_taken".to_string(), false);
+
+        assert!(
+            username_result
+                .check_username_taken_async(&FakeUsernameCheckService("taken".to_string()))
+                .await
                 .is_ok()
         )
     }
