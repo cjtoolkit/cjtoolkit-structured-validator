@@ -1,6 +1,12 @@
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
 use std::fmt::Display;
 
+/// `NumberMandatoryLocale` is a struct representing a type that may be used
+/// to enforce the concept.
+///
+///
+/// # Possible key values:
+/// * `validate-cannot-be-empty`
 pub struct NumberMandatoryLocale;
 
 impl LocaleMessage for NumberMandatoryLocale {
@@ -9,11 +15,56 @@ impl LocaleMessage for NumberMandatoryLocale {
     }
 }
 
+/// Represents a set of rules determining whether a number field or value is mandatory.
+///
+/// # Fields
+/// - `is_mandatory` (`bool`):
+///   Specifies whether the associated number is mandatory or not.
+///   - `true`: The number is required (mandatory).
+///   - `false`: The number is optional.
 pub struct NumberMandatoryRules {
     pub is_mandatory: bool,
 }
 
 impl NumberMandatoryRules {
+    /// Checks whether a given subject is valid based on the rules of the current instance
+    /// and collects any validation errors in the provided `ValidateErrorCollector`.
+    ///
+    /// # Type Parameters
+    /// - `T`: A type that implements the `Into<LocaleValue>` trait, representing the value to be checked.
+    ///
+    /// # Parameters
+    /// - `&self`: Immutable reference to the instance containing validation settings (`is_mandatory` in this case).
+    /// - `messages`: A mutable reference to a `ValidateErrorCollector`, used to collect error messages
+    ///   if the validation fails.
+    /// - `subject`: An optional input value of type `T` to be validated. If `None` and the rule `is_mandatory`
+    ///   is `true`, it triggers a validation error.
+    ///
+    /// # Behavior
+    /// - If `is_mandatory` is `true` and the `subject` is `None` (i.e., no value is provided):
+    ///   - The method appends an error message to `messages`, with the description `"Cannot be empty"`
+    ///     and a boxed `NumberMandatoryLocale` as additional context.
+    ///
+    /// # Example
+    /// ```rust
+    /// use cjtoolkit_structured_validator::base::number_rules::NumberMandatoryRules;
+    /// use cjtoolkit_structured_validator::common::locale::ValidateErrorCollector;
+    /// let validator = NumberMandatoryRules { is_mandatory: true };
+    /// let mut errors = ValidateErrorCollector::new();
+    ///
+    /// // Example with a subject as None (will cause validation error)
+    /// validator.check::<f64>(&mut errors, None);
+    /// assert_eq!(errors.len(), 1);
+    ///
+    /// // Example with a valid subject (no validation error)
+    /// validator.check::<f64>(&mut errors, Some(1.0));
+    /// assert_eq!(errors.len(), 1); // No additional errors added.
+    /// ```
+    ///
+    /// # Note
+    /// - Ensure that `ValidateErrorCollector` is properly initialized and passed by mutable reference
+    ///   to capture errors.
+    /// - The subject, when provided, must implement the `Into<LocaleValue>` trait for compatibility.
     pub fn check<T: Into<LocaleValue>>(
         &self,
         messages: &mut ValidateErrorCollector,
@@ -28,8 +79,29 @@ impl NumberMandatoryRules {
     }
 }
 
+/// An enumeration representing a range of values with localization support.
+///
+/// `NumberRangeLocale` is a generic enum used to define a localized numerical
+/// range. It encapsulates a minimum or maximum value that can be converted into
+/// a locale-specific representation using the `LocaleValue` type.
+///
+/// # Type Parameters
+/// - `T`: A type that implements the traits `Into<LocaleValue>`, `Send`, `Sync`,
+///   and `Clone`. This allows for flexible and thread-safe representation of values
+///   that can be converted into localized formats.
+///
+/// # Variants
+/// - `MinValue(T)`: Represents the minimum localized value for the range.
+/// - `MaxValue(T)`: Represents the maximum localized value for the range.
+///
 pub enum NumberRangeLocale<T: Into<LocaleValue> + Send + Sync + Clone> {
+    /// Represents the minimum localized value for the range.
+    /// # Key
+    /// * `validate-number-min-value`
     MinValue(T),
+    /// Represents the maximum localized value for the range.
+    /// # Key
+    /// * `validate-number-max-value`
     MaxValue(T),
 }
 
@@ -53,6 +125,19 @@ where
     }
 }
 
+/// A struct that represents rules for defining a range of numeric values with optional minimum and maximum bounds.
+///
+/// This struct is generic and can work with any type `T` that meets the following trait bounds:
+/// - `Clone`: The type can be cloned.
+/// - `Into<LocaleValue>`: The type can be converted into a `LocaleValue`. This allows for localization support.
+/// - `Default`: The type has a default value.
+/// - `PartialOrd`: The type supports partial ordering, enabling comparisons like less than or greater than.
+/// - `Display`: The type can be formatted as a string for display purposes.
+///
+/// # Fields
+/// - `min` (Option<T>): The optional lower bound of the range. If `None`, there is no restriction on the minimum value.
+/// - `max` (Option<T>): The optional upper bound of the range. If `None`, there is no restriction on the maximum value.
+///
 pub struct NumberRangeRules<T>
 where
     T: Clone + Into<LocaleValue> + Default + PartialOrd + Display,
@@ -65,6 +150,53 @@ impl<T> NumberRangeRules<T>
 where
     T: Clone + Into<LocaleValue> + Default + PartialOrd + Display,
 {
+    /// Validates a given `subject` against optional minimum and maximum value constraints.
+    ///
+    /// # Parameters
+    ///
+    /// - `&self`: A reference to the current instance of the object containing validation constraints.
+    /// - `messages`: A mutable reference to a `ValidateErrorCollector`, where validation error messages
+    ///   will be stored if the `subject` does not meet the constraints.
+    /// - `subject`: An optional value of type `T` to be validated against the constraints.
+    ///
+    /// # Behavior
+    ///
+    /// - If the `subject` is `Some`:
+    ///     - It checks whether the value is less than the optional minimum value (`self.min`).
+    ///         - If the value is less, an error message is added to `messages` stating that the value
+    ///           must be at least the specified minimum.
+    ///     - It checks whether the value is greater than the optional maximum value (`self.max`).
+    ///         - If the value is greater, an error message is added to `messages` stating that the value
+    ///           must be at most the specified maximum.
+    /// - If the `subject` is `None`, the default value is used during validation (`T::default()`).
+    /// - Does nothing if both `self.min` and `self.max` are `None`.
+    ///
+    /// # Usage
+    ///
+    /// This function is intended to validate numerical ranges or similar constraints. The errors detected
+    /// during validation are collected into the `ValidateErrorCollector` provided in the `messages` parameter.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use cjtoolkit_structured_validator::common::locale::ValidateErrorCollector;
+    /// use cjtoolkit_structured_validator::base::number_rules::NumberRangeRules;
+    /// let mut error_collector = ValidateErrorCollector::new();
+    /// let validator = NumberRangeRules::<usize> {
+    ///     min: Some(10),
+    ///     max: Some(100),
+    /// };
+    ///
+    /// validator.check(&mut error_collector, Some(5));   // Value too small, error is added.
+    /// validator.check(&mut error_collector, Some(105)); // Value too large, error is added.
+    /// validator.check(&mut error_collector, Some(50));  // Valid value, no error.
+    /// ```
+    ///
+    /// # Note
+    ///
+    /// - It is assumed that `T` implements the `Default`, `PartialOrd`, and `Clone` traits.
+    /// - The `ValidateErrorCollector` and `NumberRangeLocale` types are expected to support the operations shown above.
+    ///
     pub fn check(&self, messages: &mut ValidateErrorCollector, subject: Option<T>) {
         let is_some = subject.is_some();
         let subject = subject.unwrap_or_default();

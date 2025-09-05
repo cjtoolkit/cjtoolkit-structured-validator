@@ -1,5 +1,45 @@
 use crate::common::locale::{ValidateErrorCollector, ValidateErrorStore};
 
+/// A trait for performing validation checks and handling validation-related errors.
+///
+/// This trait provides methods to:
+/// - Create a new validation error instance from an error store.
+/// - Collect and validate errors, returning a result depending on whether any errors are found.
+///
+/// # Associated Types
+/// - `Self`: The concrete type that implements the `ValidationCheck` trait, which represents validation errors.
+///
+/// # Required Methods
+///
+/// ## `validate_new`
+///
+/// Creates a new instance of the implementing type using a provided `ValidateErrorStore`.
+///
+/// ### Parameters
+/// - `messages`: An instance of `ValidateErrorStore` that holds validation error information.
+///
+/// ### Returns
+/// - `Self`: A new instance of the implementing type initialized with the given error messages.
+///
+///
+/// # Provided Methods
+///
+/// ## `validate_check`
+///
+/// Performs a validation check using a `ValidateErrorCollector`. If the collector contains errors,
+/// it returns an error wrapped in the implementing type; otherwise, it succeeds with `Ok(())`.
+///
+/// ### Parameters
+/// - `messages`: An instance of `ValidateErrorCollector` that holds collected validation errors.
+///
+/// ### Returns
+/// - `Ok(())`: If the collector does not contain any errors.
+/// - `Err(Self)`: If the collector contains errors, an error instance of the implementing type is returned.
+///
+/// The default implementation checks if the provided `messages` is empty. If it is empty, it returns an `Ok(())`.
+/// Otherwise, it converts the messages into a `ValidateErrorStore` and creates a new validation error instance using `validate_new`.
+///
+///
 pub trait ValidationCheck: Sized {
     fn validate_new(messages: ValidateErrorStore) -> Self;
 
