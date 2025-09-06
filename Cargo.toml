@@ -6,6 +6,7 @@ edition = "2024"
 readme = "README.md"
 repository = "https://github.com/cjtoolkit/cjtoolkit-structured-validator"
 license-file = "LICENSE.txt"
+keywords = ["validation", "validator"]
 
 [features]
 full = ["url", "email"]
