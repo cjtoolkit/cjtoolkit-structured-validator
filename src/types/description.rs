@@ -94,6 +94,18 @@ impl ValidationCheck for DescriptionError {
     }
 }
 
+/// The `Description` struct is a simple data structure that holds two fields:
+///
+/// 1. A `String` which is the main textual content of the description.
+/// 2. A `bool` which serves as an additional flag, determines if none or not
+///
+/// This struct derives the following traits:
+///
+/// - `Debug`: Allows instances of `Description` to be formatted using the `{:?}` formatter, primarily for debugging purposes.
+/// - `PartialEq`: Enables equality comparisons between `Description` instances.
+/// - `Clone`: Allows for creating a copy of a `Description` instance.
+///
+/// Note: The inner fields are private and can only be accessed or manipulated through related methods or functions if implemented.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Description(String, bool);
 

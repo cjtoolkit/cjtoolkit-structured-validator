@@ -124,9 +124,7 @@ impl ValidationCheck for NameError {
 /// A structure representing a name with an associated boolean flag.
 ///
 /// The `Name` struct consists of a `String` value and a `bool` flag.
-/// The `String` value represents the name, and the boolean flag can be
-/// used for additional semantics or functionality (e.g., marking
-/// a name as "active" or "enabled").
+/// The `String` value represents the name
 ///
 /// # Derive Attributes:
 /// - `Debug`: Enables formatting the `Name` struct using the `{:?}` formatter for debugging purposes.
@@ -135,7 +133,7 @@ impl ValidationCheck for NameError {
 ///
 /// # Fields:
 /// - `0: String` - The name represented as a string.
-/// - `1: bool` - A boolean flag associated with the name.
+/// - `1: bool` - A boolean flag associated with the name, none if `true`, otherwise `false`
 #[derive(Debug, PartialEq, Clone)]
 pub struct Name(String, bool);
 

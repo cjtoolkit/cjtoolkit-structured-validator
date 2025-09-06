@@ -85,7 +85,7 @@ impl ValidationCheck for UrlError {
 /// The `Url` struct is a tuple struct that encapsulates the following:
 /// - A `String` representing the URL.
 /// - An optional `UrlValue` that may provide additional information or metadata for the URL.
-/// - A `bool` indicating whether the URL is active or valid.
+/// - A `bool` indicating whether the URL is none or not.
 ///
 /// # Attributes
 ///

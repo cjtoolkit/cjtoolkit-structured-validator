@@ -151,7 +151,7 @@ impl ValidationCheck for PasswordError {
 ///
 /// The `Password` struct contains two fields:
 /// - A `String` which holds the actual password.
-/// - A `bool` which indicates whether the password is visible or hidden.
+/// - A `bool` which indicates whether the password is none or not.
 ///
 /// # Derived Traits
 /// - `PartialEq`: Allows comparison between two `Password` instances to check for equality.

@@ -82,12 +82,12 @@ impl ValidationCheck for EmailError {
 }
 
 /// A struct representing an email which encapsulates a string value of the email, an optional validated email address,
-/// and a boolean flag to indicate whether the email is verified or not.
+/// and a boolean flag to indicate whether the email is none or not.
 ///
 /// # Fields
 /// - `0: String` - The raw email address as a string.
 /// - `1: Option<EmailAddress>` - An optional `EmailAddress` type representing a validated email, if applicable.
-/// - `2: bool` - A boolean indicating whether the email is verified (`true`) or not (`false`).
+/// - `2: bool` - A boolean indicating whether the email is none (`true`) or not (`false`).
 ///
 /// # Derives
 /// - `Debug` - Enables formatting of the struct using the `{:?}` formatter for debugging purposes.

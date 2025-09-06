@@ -120,9 +120,7 @@ impl ValidationCheck for UsernameError {
 ///
 /// The `Username` struct is a tuple struct consisting of:
 /// - A `String` representing the username itself.
-/// - A `bool` indicating additional information about the username, such as
-///   whether it has been verified or meets certain criteria (interpreted based
-///   on context).
+/// - A `bool` indicating additional information about the username, none if `true`, otherwise `false`.
 ///
 /// # Traits Implemented
 /// - `Debug`: Enables formatting the `Username` struct for debugging purposes.
