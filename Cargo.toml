@@ -1,7 +1,11 @@
 [package]
 name = "cjtoolkit-structured-validator"
+description = "A library for validating structured data."
 version = "0.1.0"
 edition = "2024"
+readme = "README.md"
+repository = "https://github.com/cjtoolkit/cjtoolkit-structured-validator"
+license-file = "LICENSE.txt"
 
 [features]
 full = ["url", "email"]
