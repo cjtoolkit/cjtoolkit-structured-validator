@@ -177,6 +177,9 @@ impl Default for Password {
 ///
 /// This struct can be leveraged in password validation frameworks or libraries
 /// to distinguish and handle errors related to locale-specific password rules.
+///
+/// # Key
+/// `validate-password-does-not-match`
 pub struct PasswordDoesNotMatchLocale;
 
 impl LocaleMessage for PasswordDoesNotMatchLocale {
