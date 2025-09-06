@@ -279,4 +279,8 @@ pub mod name_alias {
     pub type AddressLineRules = NameRules;
     pub type AddressLineError = NameError;
     pub type AddressLine = Name;
+
+    pub type FieldRules = NameRules;
+    pub type FieldError = NameError;
+    pub type Field = Name;
 }
