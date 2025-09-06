@@ -48,6 +48,9 @@ validate-invalid-url = URL is not valid
 
 validate-email-invalid = Email is not valid
 validate-email-does-not-match = Email does not match
+
+validate-number-min-value = Must be at least { $min }
+validate-number-max-value = Must be at most { $max }
 ```
 
 # Features Flags
