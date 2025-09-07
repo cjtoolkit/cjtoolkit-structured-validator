@@ -6,6 +6,8 @@ pub mod numbers;
 pub mod password;
 #[cfg(feature = "chrono")]
 pub mod times_chrono;
+#[cfg(feature = "humantime")]
+pub mod times_humantime;
 #[cfg(feature = "url")]
 pub mod url;
 pub mod username;
