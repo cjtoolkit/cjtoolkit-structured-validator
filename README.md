@@ -16,12 +16,6 @@ https://github.com/CJ-Jackson/animal_api_again/blob/main/ui/src/common/locale/mo
 You can also extend `Name` and hook in your own RegExp of your choosing, or you could use your
 own Post Code Validator; the possibility is endless.
 
-# Installation
-
-```sh
-cargo add cjtoolkit-structured-validator --git https://github.com/cjtoolkit/cjtoolkit-structured-validator
-```
-
 # Locale Template
 
 Fluent Template Language (FTL)
@@ -68,9 +62,3 @@ validate-date-time-max = Must be before { DATETIME($max) }
 validate-date-time-naive-max = Must be before { $max }
 validate-time-max = Must be before { $max } }
 ```
-
-# Features Flags
-
-- `full` - Enables all features.
-- `url` - Enables URL support.
-- `email` - Enables Email support.
