@@ -12,7 +12,7 @@ keywords = ["validation", "validator"]
 all-features = true
 
 [features]
-full = ["url", "email"]
+full = ["url", "email", "chrono"]
 url = ["dep:url"]
 email = ["dep:email-address-parser"]
 chrono = ["dep:chrono"]
