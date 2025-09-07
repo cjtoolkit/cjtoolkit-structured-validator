@@ -4,6 +4,8 @@ pub mod email;
 pub mod name;
 pub mod numbers;
 pub mod password;
+#[cfg(feature = "chrono")]
+pub mod times_chrono;
 #[cfg(feature = "url")]
 pub mod url;
 pub mod username;

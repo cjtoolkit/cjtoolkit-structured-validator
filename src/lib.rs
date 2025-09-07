@@ -12,6 +12,10 @@
 //!
 //! You can also extend `Name` and hook in your own RegExp of your choosing, or you could use your
 //! own Post Code Validator; the possibility is endless.
+
+#![warn(clippy::unwrap_used)]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+
 pub mod base;
 pub mod common;
 pub mod types;
