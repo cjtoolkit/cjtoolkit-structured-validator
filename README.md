@@ -57,6 +57,16 @@ validate-email-does-not-match = Email does not match
 
 validate-number-min-value = Must be at least { $min }
 validate-number-max-value = Must be at most { $max }
+
+validate-date-min = Must be after { $min }
+validate-date-time-min = Must be after { DATETIME($min) }
+validate-date-time-naive-min = Must be after { $min }
+validate-time-min = Must be after { $min } }
+
+validate-date-max = Must be before { $max }
+validate-date-time-max = Must be before { DATETIME($max) }
+validate-date-time-naive-max = Must be before { $max }
+validate-time-max = Must be before { $max } }
 ```
 
 # Features Flags
