@@ -198,14 +198,22 @@ mod humantime_impl {
     impl AsDateTimeData for Timestamp {
         fn as_date_time_data(&self) -> DateTimeData {
             let system_time: SystemTime = self.clone().into();
-            let duration_from_unix = system_time
-                .duration_since(SystemTime::UNIX_EPOCH)
-                .unwrap_or_default();
+            let (seconds, nano) = if system_time < SystemTime::UNIX_EPOCH {
+                let duration = SystemTime::UNIX_EPOCH
+                    .duration_since(system_time)
+                    .unwrap_or_default();
+                (duration.as_secs() as i64 * -1, duration.subsec_nanos())
+            } else {
+                let duration = system_time
+                    .duration_since(SystemTime::UNIX_EPOCH)
+                    .unwrap_or_default();
+                (duration.as_secs() as i64, duration.subsec_nanos())
+            };
             DateTimeData {
                 kind: DateTimeKind::DateTime,
                 date_formatted: humantime::format_rfc3339(system_time).to_string(),
-                timestamp_seconds_days: duration_from_unix.as_secs() as i64,
-                subsec_nano: duration_from_unix.subsec_nanos(),
+                timestamp_seconds_days: seconds,
+                subsec_nano: nano,
             }
         }
     }
