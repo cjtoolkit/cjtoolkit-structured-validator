@@ -74,6 +74,7 @@ impl From<f64> for LocaleValue {
  * This structure holds locale-specific information, such as the locale's name
  * and associated arguments or values used for localization.
  */
+#[derive(Clone)]
 pub struct LocaleData {
     pub name: String,
     pub args: HashMap<String, LocaleValue>,
@@ -86,7 +87,7 @@ impl LocaleData {
     /// - `name`: A string slice that represents the name to associate with the instance.
     ///
     /// # Returns
-    /// Returns a new instance of the struct, where the `name` field is initialized
+    /// A new instance of the struct, where the `name` field is initialized
     /// with the provided value and the `args` field is set to its default value.
     ///
     /// # Example
@@ -167,6 +168,12 @@ impl LocaleData {
 /// to locale information is necessary.
 pub trait LocaleMessage: Send + Sync {
     fn get_locale_data(&self) -> LocaleData;
+}
+
+impl LocaleMessage for LocaleData {
+    fn get_locale_data(&self) -> LocaleData {
+        self.clone()
+    }
 }
 
 /// `ValidateErrorStore` is a structure used to store validation errors, where each error consists
@@ -263,6 +270,16 @@ impl ValidateErrorStore {
             hasher.update(error.0.as_bytes());
         }
         hasher.finalize()
+    }
+}
+
+impl Into<ValidateErrorCollector> for ValidateErrorStore {
+    fn into(self) -> ValidateErrorCollector {
+        let mut errors: Vec<(String, Box<dyn LocaleMessage>)> = vec![];
+        for error in self.0.iter() {
+            errors.push((error.0.clone(), Box::new(error.1.get_locale_data())));
+        }
+        ValidateErrorCollector(errors)
     }
 }
 
