@@ -1,0 +1,33 @@
+[package]
+name = "cjtoolkit-structured-validator"
+description = "A library for validating structured data."
+version = "0.2.0"
+edition = "2024"
+readme = "../README.md"
+repository = "https://github.com/cjtoolkit/cjtoolkit-structured-validator"
+license-file = "LICENSE.txt"
+keywords = ["validation", "validator"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+full = ["url", "email", "chrono"]
+url = ["dep:url"]
+email = ["dep:email-address-parser"]
+chrono = ["dep:chrono"]
+humantime = ["dep:humantime"]
+
+[dependencies]
+unicode-segmentation = "1.12.0"
+thiserror = "2.0.16"
+blake3 = "1.8.2"
+
+url = { version = "2.5.7", optional = true }
+email-address-parser = { version = "2.0.0", optional = true }
+chrono = { version = "0.4.41", optional = true }
+humantime = { version = "2.2.0", optional = true }
+
+[dev-dependencies]
+# for testing async part
+tokio = { version = "1.47.1", features = ["full"] }
