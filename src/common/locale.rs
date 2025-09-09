@@ -264,6 +264,20 @@ impl ValidateErrorStore {
         self.0.iter().map(|e| e.0.clone()).collect()
     }
 
+    /// Converts the current instance into a `ValidateErrorCollector`.
+    ///
+    /// This method takes the current object, clones it, and converts it into a
+    /// `ValidateErrorCollector` instance. It is useful when you want to transform
+    /// the current object to a `ValidateErrorCollector` for further processing or
+    /// validation error handling.
+    ///
+    /// # Returns
+    ///
+    /// A `ValidateErrorCollector` created by cloning and converting the current object.
+    pub fn as_validate_error_collector(&self) -> ValidateErrorCollector {
+        self.clone().into()
+    }
+
     fn hash(&self) -> Hash {
         let mut hasher = blake3::Hasher::new();
         for error in self.0.iter() {
