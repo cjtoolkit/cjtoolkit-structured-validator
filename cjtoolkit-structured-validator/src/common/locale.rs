@@ -2,6 +2,7 @@
 
 pub use crate::common::validation_collector::{ValidateErrorCollector, ValidateErrorStore};
 use std::collections::HashMap;
+use std::sync::Arc;
 
 /// Represents various types of values associated with a locale.
 ///
@@ -72,7 +73,6 @@ impl From<f64> for LocaleValue {
  * This structure holds locale-specific information, such as the locale's name
  * and associated arguments or values used for localization.
  */
-#[derive(Clone)]
 pub struct LocaleData {
     pub name: String,
     pub args: HashMap<String, LocaleValue>,
@@ -93,11 +93,11 @@ impl LocaleData {
     /// use cjtoolkit_structured_validator::common::locale::LocaleData;
     /// let instance = LocaleData::new("example");
     /// ```
-    pub fn new(name: &str) -> Self {
-        Self {
+    pub fn new(name: &str) -> Arc<Self> {
+        Arc::new(Self {
             name: name.to_string(),
             args: Default::default(),
-        }
+        })
     }
 
     /// Creates a new instance of the structure using a name and a vector of key-value pairs.
@@ -125,11 +125,11 @@ impl LocaleData {
     /// assert_eq!(instance.name, "example_name");
     /// assert!(instance.args.contains_key("key1"));
     /// ```
-    pub fn new_with_vec(name: &str, args: Vec<(String, LocaleValue)>) -> Self {
-        Self {
+    pub fn new_with_vec(name: &str, args: Vec<(String, LocaleValue)>) -> Arc<Self> {
+        Arc::new(Self {
             name: name.to_string(),
             args: args.into_iter().collect(),
-        }
+        })
     }
 }
 
@@ -146,12 +146,13 @@ impl LocaleData {
 /// # Example
 ///
 /// ```rust
+/// use std::sync::Arc;
 /// use cjtoolkit_structured_validator::common::locale::{LocaleMessage, LocaleData};
 ///
 /// struct MyLocaleMessage;
 ///
 /// impl LocaleMessage for MyLocaleMessage {
-///     fn get_locale_data(&self) -> LocaleData {
+///     fn get_locale_data(&self) -> Arc<LocaleData> {
 ///         LocaleData::new("validate-example")
 ///     }
 /// }
@@ -165,11 +166,11 @@ impl LocaleData {
 /// This trait is designed to be used in scenarios where thread-safe and cross-thread access
 /// to locale information is necessary.
 pub trait LocaleMessage: Send + Sync {
-    fn get_locale_data(&self) -> LocaleData;
+    fn get_locale_data(&self) -> Arc<LocaleData>;
 }
 
-impl LocaleMessage for LocaleData {
-    fn get_locale_data(&self) -> LocaleData {
-        self.clone()
+impl LocaleMessage for Arc<LocaleData> {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
+        Arc::clone(self)
     }
 }

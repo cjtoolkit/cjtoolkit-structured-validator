@@ -6,6 +6,7 @@ use crate::common::locale::{
 };
 use crate::common::string_validator::{StrValidationExtension, StringValidator};
 use crate::common::validation_check::ValidationCheck;
+use std::sync::Arc;
 use thiserror::Error;
 use url::Url as UrlValue;
 
@@ -128,7 +129,7 @@ impl Default for Url {
 pub struct UrlValueLocale;
 
 impl LocaleMessage for UrlValueLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         LocaleData::new("validate-invalid-url")
     }
 }

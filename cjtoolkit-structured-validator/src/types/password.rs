@@ -6,6 +6,7 @@ use crate::common::locale::{
 };
 use crate::common::string_validator::{StrValidationExtension, StringValidator};
 use crate::common::validation_check::ValidationCheck;
+use std::sync::Arc;
 use thiserror::Error;
 
 /// Represents a set of rules or constraints that define the criteria for a valid password.
@@ -183,7 +184,7 @@ impl Default for Password {
 pub struct PasswordDoesNotMatchLocale;
 
 impl LocaleMessage for PasswordDoesNotMatchLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         LocaleData::new("validate-password-does-not-match")
     }
 }

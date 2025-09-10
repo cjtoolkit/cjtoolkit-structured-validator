@@ -3,6 +3,7 @@
 
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
 use std::fmt::Display;
+use std::sync::Arc;
 
 /// `NumberMandatoryLocale` is a struct representing a type that may be used
 /// to enforce the concept.
@@ -13,7 +14,7 @@ use std::fmt::Display;
 pub struct NumberMandatoryLocale;
 
 impl LocaleMessage for NumberMandatoryLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         LocaleData::new("validate-cannot-be-empty")
     }
 }
@@ -112,7 +113,7 @@ impl<T: Into<LocaleValue> + Send + Sync + Clone> LocaleMessage for NumberRangeLo
 where
     LocaleValue: From<T>,
 {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         use LocaleData as ld;
         use LocaleValue as lv;
         match self {

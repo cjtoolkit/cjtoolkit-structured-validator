@@ -1,0 +1,6 @@
+[workspace]
+resolver = "3"
+members = ["validate-with-regexp"]
+
+[workspace.dependencies]
+cjtoolkit-structured-validator = { path = "../cjtoolkit-structured-validator" }

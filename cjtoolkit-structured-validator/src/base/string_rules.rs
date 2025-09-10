@@ -2,6 +2,7 @@
 
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
 use crate::common::string_validator::StringValidator;
+use std::sync::Arc;
 
 /// A struct representing a mandatory locale for string processing.
 ///
@@ -18,7 +19,7 @@ use crate::common::string_validator::StringValidator;
 pub struct StringMandatoryLocale;
 
 impl LocaleMessage for StringMandatoryLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         LocaleData::new("validate-cannot-be-empty")
     }
 }
@@ -105,7 +106,7 @@ pub enum StringLengthLocale {
 }
 
 impl LocaleMessage for StringLengthLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         use LocaleData as ld;
         use LocaleValue as lv;
         match self {
@@ -252,7 +253,7 @@ pub enum StringSpecialCharLocale {
 }
 
 impl LocaleMessage for StringSpecialCharLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         use LocaleData as ld;
         match self {
             Self::MustHaveSpecialChars => ld::new("validate-must-have-special-chars"),

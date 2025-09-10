@@ -6,6 +6,7 @@ use crate::common::locale::{
 };
 use crate::common::string_validator::{StrValidationExtension, StringValidator};
 use crate::common::validation_check::ValidationCheck;
+use std::sync::Arc;
 use thiserror::Error;
 
 /// Struct representing the rules and constraints applied to a username.
@@ -175,7 +176,7 @@ pub trait IsUsernameTakenAsync {
 pub struct UsernameTakenLocale;
 
 impl LocaleMessage for UsernameTakenLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         LocaleData::new("validate-username-taken")
     }
 }

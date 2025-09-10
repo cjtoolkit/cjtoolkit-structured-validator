@@ -7,6 +7,7 @@ use crate::common::locale::{
 use crate::common::string_validator::{StrValidationExtension, StringValidator};
 use crate::common::validation_check::ValidationCheck;
 use email_address_parser::EmailAddress;
+use std::sync::Arc;
 use thiserror::Error;
 
 /// The `EmailRules` struct is used to define the rules or constraints associated with an email field.
@@ -132,7 +133,7 @@ pub enum EmailAddressLocale {
 }
 
 impl LocaleMessage for EmailAddressLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         use LocaleData as ld;
         match self {
             Self::InvalidEmail => ld::new("validate-email-invalid"),

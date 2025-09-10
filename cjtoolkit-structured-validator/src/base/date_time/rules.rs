@@ -1,5 +1,6 @@
 use crate::base::date_time::data::{DateTimeData, DateTimeKind};
 use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErrorCollector};
+use std::sync::Arc;
 
 /// `DateTimeMandatoryLocale` is a struct that enforces the usage of a specific locale
 /// when working with date and time-related operations.
@@ -15,7 +16,7 @@ use crate::common::locale::{LocaleData, LocaleMessage, LocaleValue, ValidateErro
 pub struct DateTimeMandatoryLocale;
 
 impl LocaleMessage for DateTimeMandatoryLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         LocaleData::new("validate-cannot-be-empty")
     }
 }
@@ -95,7 +96,7 @@ pub enum DateTimeRangeLocale {
 }
 
 impl LocaleMessage for DateTimeRangeLocale {
-    fn get_locale_data(&self) -> LocaleData {
+    fn get_locale_data(&self) -> Arc<LocaleData> {
         use LocaleData as ld;
         use LocaleValue as lv;
         match self {
