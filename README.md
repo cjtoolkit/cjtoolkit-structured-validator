@@ -8,16 +8,17 @@ A library for validating structured data.
 # Description
 
 A Validation library designed to be extendable with the use
-of [Rust's extension trait](http://xion.io/post/code/rust-extension-traits.html),
-for example, you can bring your own i18n by implementing extension trait against `LocaleData` and `ValidateErrorStore`
+of [Rust's extension trait](http://xion.io/post/code/rust-extension-traits.html).
 
-Here are the examples of where Poem's i18n and Dioxus's i18n are being used.
+Here are some examples of what you can do with this library with Trait Extensions:
 
-https://github.com/CJ-Jackson/animal_api_again/blob/main/backend_api/src/common/locale/mod.rs  
-https://github.com/CJ-Jackson/animal_api_again/blob/main/ui/src/common/locale/mod.rs
+* [Integration with Fluent Translation](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/fluent-integration/src/main.rs)
+* [Multiple Choice Validation](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/multiple-choice/src/main.rs)
+* [Validate with RegExp](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/validate-with-regexp/src/main.rs)
 
-You can also extend `Name` and hook in your own RegExp of your choosing, or you could use your
-own Post Code Validator; the possibility is endless.
+The trait extensions will let you create your own validation rules and integrate them with the library; the
+possibilities are endless. The examples also demonstrate the fact that it stays out of the way when it comes to writing
+testable code.
 
 # Locale Template
 
@@ -65,3 +66,5 @@ validate-date-time-max = Must be before { DATETIME($max) }
 validate-date-time-naive-max = Must be before { $max }
 validate-time-max = Must be before { $max } }
 ```
+
+Note: this should contain all the validation messages you want to use.
