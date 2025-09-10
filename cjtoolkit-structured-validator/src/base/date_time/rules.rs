@@ -195,6 +195,40 @@ impl DateTimeRangeRules {
             }
         }
     }
+
+    /// See check, this is more for checking time alone
+    pub fn check_time(
+        &self,
+        messages: &mut ValidateErrorCollector,
+        subject: Option<&DateTimeData>,
+    ) {
+        let default = DateTimeData::default();
+        let is_some = subject.is_some();
+        let subject = subject.unwrap_or(&default);
+        if let Some(min) = &self.min {
+            if is_some && subject < min {
+                messages.push((
+                    format!("Must be after '{}'", &subject.date_formatted),
+                    Box::new(DateTimeRangeLocale::MinValue(min.clone())),
+                ))
+            }
+        }
+        if let Some(max) = &self.max {
+            let mut max = max.clone();
+            if let Some(min) = &self.min
+                && &max < min
+            {
+                // add day
+                max.timestamp_seconds_days += 24 * 60 * 60;
+            }
+            if is_some && subject > &max {
+                messages.push((
+                    format!("Must be before '{}'", &subject.date_formatted),
+                    Box::new(DateTimeRangeLocale::MaxValue(max.clone())),
+                ))
+            }
+        }
+    }
 }
 
 #[cfg(test)]

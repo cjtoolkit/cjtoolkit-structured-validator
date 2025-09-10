@@ -88,7 +88,7 @@ impl TimeRules {
         if !messages.is_empty() {
             return;
         }
-        range_rule.check(messages, subject.as_ref());
+        range_rule.check_time(messages, subject.as_ref());
     }
 }
 
