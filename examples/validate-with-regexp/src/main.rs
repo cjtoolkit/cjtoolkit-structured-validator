@@ -8,7 +8,7 @@ static POSTCODE_REGEX_CACHE: OnceLock<Regex> = OnceLock::new();
 
 fn validate_postcode(postcode: &str) -> bool {
     let regex = POSTCODE_REGEX_CACHE.get_or_init(|| {
-        Regex::new(r"^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$").unwrap()
+        Regex::new(r"^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$").expect("Invalid Regex")
     });
     regex.is_match(postcode)
 }
