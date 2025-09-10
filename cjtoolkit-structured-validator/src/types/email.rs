@@ -97,6 +97,7 @@ impl ValidationCheck for EmailError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Email(String, Option<EmailAddress>, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Email {
     fn default() -> Self {
         Self(String::default(), None, true)

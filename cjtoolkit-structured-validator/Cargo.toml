@@ -17,6 +17,7 @@ url = ["dep:url"]
 email = ["dep:email-address-parser"]
 chrono = ["dep:chrono"]
 humantime = ["dep:humantime"]
+allow-default-value = []
 
 [dependencies]
 unicode-segmentation = "1.12.0"

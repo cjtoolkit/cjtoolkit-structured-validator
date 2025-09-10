@@ -124,7 +124,8 @@ impl ValidationCheck for NaiveDateTimeError {
 /// - `0`: An `Option<NaiveDateTime>` where the value is either:
 ///     - `None`: Represents the absence of a `NaiveDateTime`.
 ///     - `Some(value)`: Represents a wrapped `NaiveDateTime`.
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(any(feature = "allow-default-value", test), derive(Default))]
 pub struct NaiveDateTimeValue(Option<NaiveDateTime>);
 
 impl NaiveDateTimeValue {

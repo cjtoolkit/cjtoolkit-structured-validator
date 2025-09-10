@@ -111,6 +111,7 @@ impl ValidationCheck for IntegerError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Integer(isize, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Integer {
     fn default() -> Self {
         Self(0, true)

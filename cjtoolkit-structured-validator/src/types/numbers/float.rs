@@ -108,6 +108,7 @@ impl ValidationCheck for FloatError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Float(f64, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Float {
     fn default() -> Self {
         Self(0.0, true)

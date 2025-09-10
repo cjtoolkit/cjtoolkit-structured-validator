@@ -103,6 +103,7 @@ impl ValidationCheck for UnsignedError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Unsigned(usize, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Unsigned {
     fn default() -> Self {
         Self(0, true)

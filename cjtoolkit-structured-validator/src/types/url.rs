@@ -110,6 +110,7 @@ impl ValidationCheck for UrlError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Url(String, Option<UrlValue>, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Url {
     fn default() -> Self {
         Self(String::default(), None, true)

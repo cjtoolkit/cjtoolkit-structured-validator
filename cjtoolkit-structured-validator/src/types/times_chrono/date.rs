@@ -119,7 +119,8 @@ impl ValidationCheck for DateError {
 /// - `PartialEq`: Allows comparison between instances of `DateValue`.
 /// - `Clone`: Enables the cloning of `DateValue` instances.
 /// - `Default`: Provides a default constructor, which initializes the struct with `None`.
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(any(feature = "allow-default-value", test), derive(Default))]
 pub struct DateValue(Option<NaiveDate>);
 
 impl DateValue {

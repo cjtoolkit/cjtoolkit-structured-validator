@@ -120,6 +120,7 @@ impl ValidationCheck for DateTimeError {
 /// `DateTime` value, encapsulating the concept of nullable or absent
 /// datetime values with a specific time zone context.
 #[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(any(feature = "allow-default-value", test), derive(Default))]
 pub struct DateTimeValue<Tz: TimeZone>(Option<DateTime<Tz>>);
 
 impl<Tz: TimeZone> DateTimeValue<Tz> {

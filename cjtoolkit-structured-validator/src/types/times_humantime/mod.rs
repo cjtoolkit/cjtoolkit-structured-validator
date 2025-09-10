@@ -126,7 +126,8 @@ impl ValidationCheck for DateTimeError {
 ///
 /// # Fields
 /// - `0: Option<Timestamp>`: An optional `Timestamp` encapsulated in the `DateTimeValue`.
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "allow-default-value", derive(Default))]
 pub struct DateTimeValue(Option<Timestamp>);
 
 impl DateTimeValue {

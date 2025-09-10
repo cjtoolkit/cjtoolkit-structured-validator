@@ -109,6 +109,7 @@ impl ValidationCheck for DescriptionError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Description(String, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Description {
     fn default() -> Self {
         Self(String::new(), true)

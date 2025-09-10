@@ -137,6 +137,7 @@ impl ValidationCheck for NameError {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Name(String, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Name {
     fn default() -> Self {
         Self(String::new(), true)

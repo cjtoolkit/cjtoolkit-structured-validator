@@ -160,6 +160,7 @@ impl ValidationCheck for PasswordError {
 #[derive(PartialEq, Clone)]
 pub struct Password(String, bool);
 
+#[cfg(any(feature = "allow-default-value", test))]
 impl Default for Password {
     fn default() -> Self {
         Self(String::new(), true)

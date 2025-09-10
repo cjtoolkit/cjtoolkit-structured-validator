@@ -142,7 +142,8 @@ impl ValidationCheck for TimeError {
 /// - `PartialEq`: Enables comparison between `TimeValue` instances for equality.
 /// - `Clone`: Provides the ability to create a copy of the `TimeValue` instance.
 /// - `Default`: Supplies a default value of `None` for the underlying time.
-#[derive(Debug, PartialEq, Clone, Default)]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(any(feature = "allow-default-value", test), derive(Default))]
 pub struct TimeValue(Option<NaiveTime>);
 
 impl TimeValue {
