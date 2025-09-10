@@ -1,0 +1,11 @@
+[package]
+name = "fluent-integration"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+fluent = "0.17.0"
+unic-langid = "0.9.6"
+
+cjtoolkit-structured-validator = { workspace = true }

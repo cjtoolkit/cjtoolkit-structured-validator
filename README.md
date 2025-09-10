@@ -2,6 +2,9 @@
 
 A library for validating structured data.
 
+[![crates.io](https://img.shields.io/crates/v/cjtoolkit-structured-validator.svg)](https://crates.io/crates/cjtoolkit-structured-validator)
+[![docs.rs](https://img.shields.io/docsrs/cjtoolkit-structured-validator)](https://docs.rs/cjtoolkit-structured-validator)
+
 # Description
 
 A Validation library designed to be extendable with the use
