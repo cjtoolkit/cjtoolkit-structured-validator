@@ -248,12 +248,6 @@ impl<Tz: TimeZone> DateTimeValue<Tz> {
     /// * `Ok(Self)` - If the parsing and timezone application are successful, it returns a `DateTime` instance.
     /// * `Err(DateTimeError)` - If there is an error during parsing, such as an invalid `NaiveDateTime` or
     ///   issues with the provided timezone, a `DateTimeError` is returned.
-    ///
-    /// # See Also
-    ///
-    /// * [`parse_custom_naive_with_tz`](self::parse_custom_naive_with_tz) - For specifying custom rules
-    ///   during parsing.
-    /// * [`DateTimeRules`] - Used to define and configure the default rules for parsing and validation.
     pub fn parse_naive_with_tz(
         subject: Option<NaiveDateTime>,
         tz: Tz,

@@ -213,11 +213,6 @@ impl TimeValue {
     /// - `Ok(Self)`: On successful parsing and generation of the `Self` instance.
     /// - `Err(TimeError)`: If there is an error during the parsing, or if the input does not meet the expected criteria.
     ///
-    /// # See Also
-    ///
-    /// - [`parse_custom_with_format`]: The method that this function relies on for processing
-    ///   the time along with an optional format.
-    ///
     /// # Example
     ///
     /// ```rust
