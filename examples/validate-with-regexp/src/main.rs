@@ -27,7 +27,6 @@ trait ParsePostCode {
 
 impl ParsePostCode for Name {
     fn parse_postcode(s: Option<&str>) -> Result<Name, NameError> {
-        let default_value = Self::default();
         let postcode = Self::parse_custom(
             s,
             NameRules {
@@ -41,7 +40,13 @@ impl ParsePostCode for Name {
             .err()
             .map(|e| e.0.as_validate_error_collector())
             .unwrap_or_default();
-        if !validate_postcode(postcode.as_ref().ok().unwrap_or(&default_value).as_str()) {
+        if !validate_postcode(
+            postcode
+                .as_ref()
+                .ok()
+                .map(|v| v.as_str())
+                .unwrap_or_default(),
+        ) {
             messages.push(("Invalid Postcode".to_string(), Box::new(PostcodeLocale)));
         }
         NameError::validate_check(messages)?;
