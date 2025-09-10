@@ -128,7 +128,7 @@ impl Subject {
         }
         Ok(SubjectValidated {
             title: title.expect("Expected title to be valid"),
-            description: description.expect("Expected descrption to be valid"),
+            description: description.expect("Expected description to be valid"),
         })
     }
 }
