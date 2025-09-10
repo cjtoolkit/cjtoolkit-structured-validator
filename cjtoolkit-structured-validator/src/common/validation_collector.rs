@@ -140,6 +140,7 @@ impl Into<ValidateErrorCollector> for ValidateErrorStore {
 /// Note: The `LocaleMessage` trait is used to encapsulate errors with localization support.
 /// Implementations of `LocaleMessage` should provide mechanisms for translating error messages
 /// to various locales.
+#[derive(Default)]
 pub struct ValidateErrorCollector(pub Vec<(String, Box<dyn LocaleMessage>)>);
 
 impl Into<ValidateErrorStore> for ValidateErrorCollector {
