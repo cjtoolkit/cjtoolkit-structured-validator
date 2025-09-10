@@ -1,6 +1,10 @@
 [workspace]
 resolver = "3"
-members = [ "fluent-integration","validate-with-regexp"]
+members = [
+    "fluent-integration",
+    "multiple-choice",
+    "validate-with-regexp"
+]
 
 [workspace.package]
 version = "0.1.0"
