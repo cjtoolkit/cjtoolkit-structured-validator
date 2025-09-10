@@ -2,5 +2,10 @@
 resolver = "3"
 members = ["validate-with-regexp"]
 
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+publish = false
+
 [workspace.dependencies]
 cjtoolkit-structured-validator = { path = "../cjtoolkit-structured-validator" }
