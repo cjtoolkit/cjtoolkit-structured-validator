@@ -148,7 +148,7 @@ impl ValidationCheck for PasswordError {
     }
 }
 
-impl Into<ValidateErrorStore> for PasswordError {
+impl Into<ValidateErrorStore> for &PasswordError {
     fn into(self) -> ValidateErrorStore {
         self.0.clone()
     }
