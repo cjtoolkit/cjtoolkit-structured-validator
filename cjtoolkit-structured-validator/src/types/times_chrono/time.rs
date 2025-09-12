@@ -128,6 +128,12 @@ impl ValidationCheck for TimeError {
     }
 }
 
+impl Into<ValidateErrorStore> for &TimeError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A wrapper struct for representing an optional `NaiveTime` value.
 ///
 /// The `TimeValue` struct provides a convenient way to handle optional time values

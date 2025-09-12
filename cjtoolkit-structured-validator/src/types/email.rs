@@ -82,6 +82,12 @@ impl ValidationCheck for EmailError {
     }
 }
 
+impl Into<ValidateErrorStore> for &EmailError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A struct representing an email which encapsulates a string value of the email, an optional validated email address,
 /// and a boolean flag to indicate whether the email is none or not.
 ///

@@ -105,6 +105,12 @@ impl ValidationCheck for DateError {
     }
 }
 
+impl Into<ValidateErrorStore> for &DateError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A wrapper struct for `Option<NaiveDate>` that represents an optional date value.
 ///
 /// `DateValue` is a simple wrapper around `Option<NaiveDate>` to handle date values

@@ -121,6 +121,12 @@ impl ValidationCheck for NameError {
     }
 }
 
+impl Into<ValidateErrorStore> for &NameError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A structure representing a name with an associated boolean flag.
 ///
 /// The `Name` struct consists of a `String` value and a `bool` flag.

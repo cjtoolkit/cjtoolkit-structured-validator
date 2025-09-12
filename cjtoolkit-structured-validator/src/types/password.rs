@@ -148,6 +148,12 @@ impl ValidationCheck for PasswordError {
     }
 }
 
+impl Into<ValidateErrorStore> for PasswordError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A struct representing a combination of a password and its visibility state.
 ///
 /// The `Password` struct contains two fields:

@@ -1,5 +1,6 @@
 use cjtoolkit_structured_validator::common::locale::{LocaleData, LocaleMessage};
 use cjtoolkit_structured_validator::common::validation_check::ValidationCheck;
+use cjtoolkit_structured_validator::common::validation_collector::AsValidateErrorStore;
 use cjtoolkit_structured_validator::types::name::{Name, NameError, NameRules};
 use regex::Regex;
 use std::sync::{Arc, OnceLock};
@@ -35,11 +36,7 @@ impl ParsePostCode for Name {
                 max_length: Some(10),
             },
         );
-        let mut messages = postcode
-            .as_ref()
-            .err()
-            .map(|e| e.0.as_validate_error_collector())
-            .unwrap_or_default();
+        let mut messages = postcode.as_validate_error_collector();
         if !validate_postcode(
             postcode
                 .as_ref()

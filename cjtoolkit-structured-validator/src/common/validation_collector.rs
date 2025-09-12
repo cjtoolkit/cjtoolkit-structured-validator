@@ -213,3 +213,20 @@ impl ValidateErrorCollector {
         self.0.len()
     }
 }
+
+///
+pub trait AsValidateErrorStore {
+    fn as_validate_store(&self) -> ValidateErrorStore;
+    fn as_validate_error_collector(&self) -> ValidateErrorCollector {
+        self.as_validate_store().as_validate_error_collector()
+    }
+}
+
+impl<T, E> AsValidateErrorStore for Result<T, E>
+where
+    for<'a> &'a E: Into<ValidateErrorStore>,
+{
+    fn as_validate_store(&self) -> ValidateErrorStore {
+        self.as_ref().err().map(Into::into).unwrap_or_default()
+    }
+}

@@ -91,6 +91,12 @@ impl ValidationCheck for FloatError {
     }
 }
 
+impl Into<ValidateErrorStore> for &FloatError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A struct that represents a floating-point number with additional metadata.
 ///
 /// The `Float` struct is composed of two fields:

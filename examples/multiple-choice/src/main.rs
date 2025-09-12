@@ -1,5 +1,6 @@
 use cjtoolkit_structured_validator::common::locale::{LocaleData, LocaleMessage};
 use cjtoolkit_structured_validator::common::validation_check::ValidationCheck;
+use cjtoolkit_structured_validator::common::validation_collector::AsValidateErrorStore;
 use cjtoolkit_structured_validator::types::name::{Name, NameError, NameRules};
 use std::sync::Arc;
 
@@ -31,11 +32,7 @@ impl FruitChoice for Name {
                 max_length: None,
             },
         );
-        let mut messages = subject
-            .as_ref()
-            .err()
-            .map(|e| e.0.as_validate_error_collector())
-            .unwrap_or_default();
+        let mut messages = subject.as_validate_error_collector();
         if !check_fruit_choice(
             subject
                 .as_ref()

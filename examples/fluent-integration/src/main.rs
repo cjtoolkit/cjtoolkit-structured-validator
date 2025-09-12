@@ -1,5 +1,6 @@
 use cjtoolkit_structured_validator::common::flag_error::FlagCounter;
 use cjtoolkit_structured_validator::common::locale::{LocaleData, LocaleValue, ValidateErrorStore};
+use cjtoolkit_structured_validator::common::validation_collector::AsValidateErrorStore;
 use cjtoolkit_structured_validator::types::description::{Description, DescriptionError};
 use cjtoolkit_structured_validator::types::name::name_alias::{Title, TitleError};
 use fluent::{FluentArgs, FluentBundle, FluentResource};
@@ -86,6 +87,36 @@ impl FluentBundleForStore for ValidateErrorStore {
     }
 }
 
+trait AsTranslatedMessageFromResult: AsValidateErrorStore {
+    fn as_translated_messages<R: Borrow<FluentResource>>(
+        &self,
+        bundle: &FluentBundle<R>,
+    ) -> Vec<String>;
+    fn as_translated_messages_arc<R: Borrow<FluentResource>>(
+        &self,
+        bundle: &FluentBundle<R>,
+    ) -> Arc<[String]>;
+}
+
+impl<T, E> AsTranslatedMessageFromResult for Result<T, E>
+where
+    for<'a> &'a E: Into<ValidateErrorStore>,
+{
+    fn as_translated_messages<R: Borrow<FluentResource>>(
+        &self,
+        bundle: &FluentBundle<R>,
+    ) -> Vec<String> {
+        self.as_validate_store().as_translated_messages(bundle)
+    }
+
+    fn as_translated_messages_arc<R: Borrow<FluentResource>>(
+        &self,
+        bundle: &FluentBundle<R>,
+    ) -> Arc<[String]> {
+        self.as_validate_store().as_translated_messages_arc(bundle)
+    }
+}
+
 fn build_english_bundle() -> FluentBundle<FluentResource> {
     let ftl_string = String::from(include_str!("_locale/english.ftl"));
 
@@ -154,18 +185,8 @@ struct SubjectMessage {
 impl<R: Borrow<FluentResource>> From<(&SubjectError, &FluentBundle<R>)> for SubjectMessage {
     fn from((error, bundle): (&SubjectError, &FluentBundle<R>)) -> Self {
         Self {
-            title: error
-                .title
-                .as_ref()
-                .err()
-                .map(|e| e.0.as_translated_messages_arc(bundle))
-                .unwrap_or_default(),
-            description: error
-                .description
-                .as_ref()
-                .err()
-                .map(|e| e.0.as_translated_messages_arc(bundle))
-                .unwrap_or_default(),
+            title: error.title.as_translated_messages_arc(bundle),
+            description: error.description.as_translated_messages_arc(bundle),
         }
     }
 }

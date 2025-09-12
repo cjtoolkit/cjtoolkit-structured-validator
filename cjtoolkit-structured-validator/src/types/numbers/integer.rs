@@ -94,6 +94,12 @@ impl ValidationCheck for IntegerError {
     }
 }
 
+impl Into<ValidateErrorStore> for &IntegerError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A struct representing an integer value paired with a boolean flag.
 ///
 /// The `Integer` struct contains:

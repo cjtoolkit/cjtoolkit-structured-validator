@@ -112,6 +112,12 @@ impl ValidationCheck for DateTimeError {
     }
 }
 
+impl Into<ValidateErrorStore> for &DateTimeError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A wrapper around an `Option<Timestamp>` representing a datetime value.
 ///
 /// The `DateTimeValue` struct is a simple abstraction that allows for optional storage

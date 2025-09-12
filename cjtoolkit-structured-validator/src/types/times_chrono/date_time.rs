@@ -100,6 +100,12 @@ impl ValidationCheck for DateTimeError {
     }
 }
 
+impl Into<ValidateErrorStore> for &DateTimeError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A wrapper struct that encapsulates an optional `DateTime` object
 /// with an associated `TimeZone`.
 ///

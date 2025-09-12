@@ -117,6 +117,12 @@ impl ValidationCheck for UsernameError {
     }
 }
 
+impl Into<ValidateErrorStore> for &UsernameError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A struct that represents a username with additional metadata.
 ///
 /// The `Username` struct is a tuple struct consisting of:

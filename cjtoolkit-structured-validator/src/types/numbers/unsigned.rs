@@ -87,6 +87,12 @@ impl ValidationCheck for UnsignedError {
     }
 }
 
+impl Into<ValidateErrorStore> for &UnsignedError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A struct that represents an unsigned integer with additional metadata.
 ///
 /// The `Unsigned` struct encapsulates a `usize` value along with a boolean flag,

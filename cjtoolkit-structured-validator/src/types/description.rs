@@ -94,6 +94,12 @@ impl ValidationCheck for DescriptionError {
     }
 }
 
+impl Into<ValidateErrorStore> for &DescriptionError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// The `Description` struct is a simple data structure that holds two fields:
 ///
 /// 1. A `String` which is the main textual content of the description.

@@ -111,6 +111,12 @@ impl ValidationCheck for NaiveDateTimeError {
     }
 }
 
+impl Into<ValidateErrorStore> for &NaiveDateTimeError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// `NaiveDateTimeValue` is a wrapper struct for an `Option<NaiveDateTime>`,
 /// allowing for easier handling of nullable or optional `NaiveDateTime` values.
 ///

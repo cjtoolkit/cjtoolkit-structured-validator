@@ -81,6 +81,12 @@ impl ValidationCheck for UrlError {
     }
 }
 
+impl Into<ValidateErrorStore> for &UrlError {
+    fn into(self) -> ValidateErrorStore {
+        self.0.clone()
+    }
+}
+
 /// A structure representing a URL with its components.
 ///
 /// The `Url` struct is a tuple struct that encapsulates the following:
