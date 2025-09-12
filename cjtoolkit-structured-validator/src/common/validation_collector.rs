@@ -217,8 +217,17 @@ impl ValidateErrorCollector {
 ///
 pub trait AsValidateErrorStore {
     fn as_validate_store(&self) -> ValidateErrorStore;
+
     fn as_validate_error_collector(&self) -> ValidateErrorCollector {
         self.as_validate_store().as_validate_error_collector()
+    }
+
+    fn as_original_message_vec(&self) -> Vec<String> {
+        self.as_validate_store().as_original_message_vec()
+    }
+
+    fn as_original_message(&self) -> Arc<[String]> {
+        self.as_validate_store().as_original_message()
     }
 }
 
