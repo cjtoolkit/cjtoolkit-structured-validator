@@ -204,6 +204,19 @@ impl DateTimeValue {
     }
 }
 
+pub trait AsTimestampOnResult {
+    fn as_timestamp(&self) -> Option<Timestamp>;
+}
+
+impl<E> AsTimestampOnResult for Result<DateTimeValue, E> {
+    fn as_timestamp(&self) -> Option<Timestamp> {
+        self.as_ref()
+            .ok()
+            .map(|s| s.as_timestamp())
+            .unwrap_or_default()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -241,6 +241,16 @@ impl Float {
     }
 }
 
+pub trait AsFloatOnResult {
+    fn as_f64(&self) -> f64;
+}
+
+impl<E> AsFloatOnResult for Result<Float, E> {
+    fn as_f64(&self) -> f64 {
+        self.as_ref().ok().map_or(0.0, |u| u.as_f64())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

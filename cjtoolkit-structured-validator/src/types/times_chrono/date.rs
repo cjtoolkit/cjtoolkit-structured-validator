@@ -316,6 +316,19 @@ impl DateValue {
     }
 }
 
+pub trait AsNaiveDateOnResult {
+    fn as_naive_date(&self) -> Option<NaiveDate>;
+}
+
+impl<E> AsNaiveDateOnResult for Result<DateValue, E> {
+    fn as_naive_date(&self) -> Option<NaiveDate> {
+        self.as_ref()
+            .ok()
+            .map(|t| t.as_naive_date())
+            .unwrap_or_default()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

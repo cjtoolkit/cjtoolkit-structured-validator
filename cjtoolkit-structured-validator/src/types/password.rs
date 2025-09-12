@@ -351,6 +351,12 @@ impl Password {
     }
 }
 
+impl Into<String> for &Password {
+    fn into(self) -> String {
+        self.as_str().to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

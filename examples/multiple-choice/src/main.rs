@@ -1,6 +1,7 @@
 use cjtoolkit_structured_validator::common::locale::{LocaleData, LocaleMessage};
 use cjtoolkit_structured_validator::common::validation_check::ValidationCheck;
 use cjtoolkit_structured_validator::common::validation_collector::AsValidateErrorStore;
+use cjtoolkit_structured_validator::types::AsStringOnResult;
 use cjtoolkit_structured_validator::types::name::{Name, NameError, NameRules};
 use std::sync::Arc;
 
@@ -33,13 +34,7 @@ impl FruitChoice for Name {
             },
         );
         let mut messages = subject.as_validate_error_collector();
-        if !check_fruit_choice(
-            subject
-                .as_ref()
-                .ok()
-                .map(|v| v.as_str())
-                .unwrap_or_default(),
-        ) {
+        if !check_fruit_choice(subject.as_string().as_str()) {
             messages.push((
                 r#"Invalid Fruit, valid fruit are 'apple', 'banana' and 'orange'"#.to_string(),
                 Box::new(FruitChoiceLocale),

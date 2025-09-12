@@ -224,6 +224,12 @@ impl Description {
     }
 }
 
+impl Into<String> for &Description {
+    fn into(self) -> String {
+        self.as_str().to_string()
+    }
+}
+
 pub mod description_alias {
     use super::*;
 

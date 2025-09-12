@@ -260,6 +260,12 @@ impl Name {
     }
 }
 
+impl Into<String> for &Name {
+    fn into(self) -> String {
+        self.0.as_str().to_string()
+    }
+}
+
 pub mod name_alias {
     use super::*;
 

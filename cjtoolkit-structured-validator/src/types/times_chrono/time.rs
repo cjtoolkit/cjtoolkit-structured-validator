@@ -326,6 +326,16 @@ impl TimeValue {
     }
 }
 
+pub trait AsNaiveTimeOnResult {
+    fn as_naive_time(&self) -> Option<NaiveTime>;
+}
+
+impl<E> AsNaiveTimeOnResult for Result<TimeValue, E> {
+    fn as_naive_time(&self) -> Option<NaiveTime> {
+        self.as_ref().ok().map(|t| t.as_time()).unwrap_or_default()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

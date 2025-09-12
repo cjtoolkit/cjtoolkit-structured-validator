@@ -394,6 +394,12 @@ impl Username {
     }
 }
 
+impl Into<String> for &Username {
+    fn into(self) -> String {
+        self.as_str().to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

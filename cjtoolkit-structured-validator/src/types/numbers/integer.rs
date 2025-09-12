@@ -243,6 +243,16 @@ impl Integer {
     }
 }
 
+pub trait AsIntegerOnResult {
+    fn as_isize(&self) -> isize;
+}
+
+impl<E> AsIntegerOnResult for Result<Integer, E> {
+    fn as_isize(&self) -> isize {
+        self.as_ref().ok().map_or(0, |u| u.as_isize())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

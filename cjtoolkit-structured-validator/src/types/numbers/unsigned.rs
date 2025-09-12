@@ -196,6 +196,16 @@ impl Unsigned {
     }
 }
 
+pub trait AsUnsignedOnResult {
+    fn as_usize(&self) -> usize;
+}
+
+impl<E> AsUnsignedOnResult for Result<Unsigned, E> {
+    fn as_usize(&self) -> usize {
+        self.as_ref().ok().map_or(0, |u| u.as_usize())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

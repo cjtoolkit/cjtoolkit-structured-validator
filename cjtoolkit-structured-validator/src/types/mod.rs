@@ -11,3 +11,16 @@ pub mod times_humantime;
 #[cfg(feature = "url")]
 pub mod url;
 pub mod username;
+
+pub trait AsStringOnResult {
+    fn as_string(&self) -> String;
+}
+
+impl<T, E> AsStringOnResult for Result<T, E>
+where
+    for<'a> &'a T: Into<String>,
+{
+    fn as_string(&self) -> String {
+        self.as_ref().ok().map(|s| s.into()).unwrap_or_default()
+    }
+}

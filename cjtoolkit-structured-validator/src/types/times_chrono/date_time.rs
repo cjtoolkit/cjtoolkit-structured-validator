@@ -271,6 +271,16 @@ impl<Tz: TimeZone> DateTimeValue<Tz> {
     }
 }
 
+pub trait AsDateTimeOnResult<Tz: TimeZone> {
+    fn as_date_time(&self) -> Option<DateTime<Tz>>;
+}
+
+impl<Tz: TimeZone, E> AsDateTimeOnResult<Tz> for Result<DateTimeValue<Tz>, E> {
+    fn as_date_time(&self) -> Option<DateTime<Tz>> {
+        self.as_ref().map(|t| t.as_date_time()).unwrap_or_default()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

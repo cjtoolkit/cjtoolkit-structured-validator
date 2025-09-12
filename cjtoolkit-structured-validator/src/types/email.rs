@@ -320,6 +320,12 @@ impl Email {
     }
 }
 
+impl Into<String> for &Email {
+    fn into(self) -> String {
+        self.as_str().to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -327,6 +327,19 @@ impl NaiveDateTimeValue {
     }
 }
 
+pub trait AsNaiveDateTimeOnResult {
+    fn as_naive_date_time(&self) -> Option<NaiveDateTime>;
+}
+
+impl<E> AsNaiveDateTimeOnResult for Result<NaiveDateTimeValue, E> {
+    fn as_naive_date_time(&self) -> Option<NaiveDateTime> {
+        self.as_ref()
+            .ok()
+            .map(|t| t.as_naive_date_time())
+            .unwrap_or_default()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -291,6 +291,12 @@ impl Url {
     }
 }
 
+impl Into<String> for &Url {
+    fn into(self) -> String {
+        self.as_str().to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
