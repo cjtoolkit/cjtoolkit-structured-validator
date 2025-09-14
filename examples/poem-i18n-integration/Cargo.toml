@@ -1,0 +1,10 @@
+[package]
+name = "poem-i18n-integration"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+cjtoolkit-structured-validator = { workspace = true }
+poem = { version = "3.1.12", features = ["i18n", "test"] }
+tokio = { version = "1.47.1", features = ["macros", "rt-multi-thread"] }

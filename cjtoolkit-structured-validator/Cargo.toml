@@ -1,7 +1,7 @@
 [package]
 name = "cjtoolkit-structured-validator"
 description = "A library for validating structured data."
-version = "0.5.1"
+version = "0.5.2"
 edition = "2024"
 readme = "../README.md"
 repository = "https://github.com/cjtoolkit/cjtoolkit-structured-validator"

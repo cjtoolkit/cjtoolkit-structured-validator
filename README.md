@@ -13,6 +13,7 @@ of [Rust's extension trait](http://xion.io/post/code/rust-extension-traits.html)
 Here are some examples of what you can do with this library with Trait Extensions:
 
 * [Integration with Fluent Translation](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/fluent-integration/src/main.rs)
+* [Integration with Poem's i18n](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/poem-i18n-integration/src/main.rs)
 * [Multiple Choice Validation](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/multiple-choice/src/main.rs)
 * [Validate with RegExp](https://github.com/cjtoolkit/cjtoolkit-structured-validator/blob/main/examples/validate-with-regexp/src/main.rs)
 
