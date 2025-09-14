@@ -214,7 +214,15 @@ impl ValidateErrorCollector {
     }
 }
 
+/// A trait that provides an abstraction to interact with and retrieve validation-related data
+/// such as error stores, error collectors, and original messages.
 ///
+/// Implementors of this trait are expected to provide a mechanism to convert or extract
+/// their underlying structure into a `ValidateErrorStore`, which can then be used to
+/// access detailed validation-related data.
+///
+/// This trait also provides default implementations for retrieving validation error
+/// collectors and original messages, relying on the `ValidateErrorStore` for such operations.
 pub trait AsValidateErrorStore {
     fn as_validate_store(&self) -> ValidateErrorStore;
 
