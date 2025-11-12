@@ -6,7 +6,6 @@ edition = "2024"
 readme = "../README.md"
 repository = "https://github.com/cjtoolkit/cjtoolkit-structured-validator"
 license = "MIT"
-license-file = "../LICENSE.txt"
 keywords = ["validation", "validator"]
 
 [package.metadata.docs.rs]
