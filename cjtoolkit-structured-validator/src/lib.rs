@@ -5,7 +5,7 @@
 //! A Validation library designed to be extendable with the use of Rust's extension trait.
 
 #![warn(clippy::unwrap_used)]
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 pub mod base;
 pub mod common;
